@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mala's French Learning App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🇫🇷 Frans Oefenen met Mala</h1>
+        <p class="subtitle">Remediëring Frans - Eerste Graad</p>
+    </header>
+
+    <nav id="main-nav">
+        <div class="nav-section">
+            <h3>Grammatica Onderwerpen</h3>
+            <ul>
+                <li><a href="#" data-topic="pronoms-sujets">Les pronoms personnels sujets</a></li>
+                <li><a href="#" data-topic="negation">La négation</a></li>
+                <li><a href="#" data-topic="etre-avoir">Être / Avoir / Verbes en -ER</a></li>
+                <li><a href="#" data-topic="verbes-re">Les verbes en -RE</a></li>
+                <li><a href="#" data-topic="verbes-ir">Les verbes en -IR</a></li>
+                <li><a href="#" data-topic="questions">La question</a></li>
+                <li><a href="#" data-topic="adj-possessif">L'adjectif possessif</a></li>
+                <li><a href="#" data-topic="adj-qualificatif">L'adjectif qualificatif</a></li>
+                <li><a href="#" data-topic="verbes-pronominaux">Les verbes pronominaux</a></li>
+                <li><a href="#" data-topic="adj-demonstratif">L'adjectif démonstratif</a></li>
+                <li><a href="#" data-topic="article-partitif">L'article partitif</a></li>
+                <li><a href="#" data-topic="imparfait">L'imparfait</a></li>
+                <li><a href="#" data-topic="futur-simple">Le futur simple</a></li>
+                <li><a href="#" data-topic="conditionnel">Le conditionnel</a></li>
+                <li><a href="#" data-topic="cod-coi">Les pronoms COD / COI</a></li>
+                <li><a href="#" data-topic="passe-compose">Le passé composé</a></li>
+                <li><a href="#" data-topic="imperatif">L'impératif</a></li>
+                <li><a href="#" data-topic="futur-proche">Le futur proche</a></li>
+            </ul>
+        </div>
+        <div class="nav-section">
+            <h3>Extra</h3>
+            <ul>
+                <li><a href="#" data-topic="progress">📊 Mijn Voortgang</a></li>
+                <li><a href="#" data-topic="planner">📅 Studieplanner</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="content-area">
+        <!-- Welcome Screen -->
+        <section id="welcome" class="topic-section active">
+            <h2>Welkom Mala! 👋</h2>
+            <div class="welcome-content">
+                <p>Dit is jouw persoonlijke app om Frans te oefenen. Kies een onderwerp uit het menu om te beginnen!</p>
+                <div class="quick-start">
+                    <h3>Wat moet je doen?</h3>
+                    <ul>
+                        <li>✅ Maak een planning voor 1 maand</li>
+                        <li>✅ Oefen minstens 8 dagen, telkens 1 uur</li>
+                        <li>✅ Laat je ouders tekenen</li>
+                        <li>📅 Deadline: 5 januari 2026</li>
+                    </ul>
+                </div>
+                <div class="topics-overview">
+                    <h3>Onderwerpen om te oefenen:</h3>
+                    <div class="topic-cards">
+                        <div class="topic-card" data-topic="pronoms-sujets">
+                            <span class="card-icon">👤</span>
+                            <span class="card-title">Pronoms sujets</span>
+                        </div>
+                        <div class="topic-card" data-topic="negation">
+                            <span class="card-icon">🚫</span>
+                            <span class="card-title">Négation</span>
+                        </div>
+                        <div class="topic-card" data-topic="etre-avoir">
+                            <span class="card-icon">📝</span>
+                            <span class="card-title">Être/Avoir/-ER</span>
+                        </div>
+                        <div class="topic-card" data-topic="verbes-re">
+                            <span class="card-icon">✏️</span>
+                            <span class="card-title">Verbes -RE</span>
+                        </div>
+                        <div class="topic-card" data-topic="verbes-ir">
+                            <span class="card-icon">🖊️</span>
+                            <span class="card-title">Verbes -IR</span>
+                        </div>
+                        <div class="topic-card" data-topic="questions">
+                            <span class="card-icon">❓</span>
+                            <span class="card-title">Questions</span>
+                        </div>
+                        <div class="topic-card" data-topic="adj-possessif">
+                            <span class="card-icon">🏠</span>
+                            <span class="card-title">Adj. possessif</span>
+                        </div>
+                        <div class="topic-card" data-topic="passe-compose">
+                            <span class="card-icon">⏮️</span>
+                            <span class="card-title">Passé composé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pronoms Personnels Sujets -->
+        <section id="pronoms-sujets" class="topic-section">
+            <h2>Les pronoms personnels sujets</h2>
+            <div class="theory-box">
+                <h3>📚 Theorie</h3>
+                <table class="grammar-table">
+                    <tr>
+                        <th>Frans</th>
+                        <th>Nederlands</th>
+                    </tr>
+                    <tr><td>je / j'</td><td>ik</td></tr>
+                    <tr><td>tu</td><td>jij</td></tr>
+                    <tr><td>il</td><td>hij</td></tr>
+                    <tr><td>elle</td><td>zij (vrouwelijk)</td></tr>
+                    <tr><td>on</td><td>men / we (informeel)</td></tr>
+                    <tr><td>nous</td><td>wij</td></tr>
+                    <tr><td>vous</td><td>jullie / u</td></tr>
+                    <tr><td>ils</td><td>zij (mannelijk meervoud)</td></tr>
+                    <tr><td>elles</td><td>zij (vrouwelijk meervoud)</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> Gebruik <em>j'</em> voor een klinker of stomme h: j'aime, j'habite
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="pronoms-sujets">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="ps-1">
+                    <p class="question">Kies het juiste persoonlijk voornaamwoord:</p>
+                    <p class="sentence">Marie est ma sœur. ___ est gentille.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="il">il</button>
+                        <button class="option-btn" data-answer="elle" data-correct="true">elle</button>
+                        <button class="option-btn" data-answer="ils">ils</button>
+                        <button class="option-btn" data-answer="elles">elles</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ps-2">
+                    <p class="question">Kies het juiste persoonlijk voornaamwoord:</p>
+                    <p class="sentence">Pierre et Marc sont mes amis. ___ sont sympas.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="il">il</button>
+                        <button class="option-btn" data-answer="elle">elle</button>
+                        <button class="option-btn" data-answer="ils" data-correct="true">ils</button>
+                        <button class="option-btn" data-answer="elles">elles</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ps-3">
+                    <p class="question">Kies het juiste persoonlijk voornaamwoord:</p>
+                    <p class="sentence">Sophie et Julie sont mes sœurs. ___ sont à l'école.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ils">ils</button>
+                        <button class="option-btn" data-answer="elles" data-correct="true">elles</button>
+                        <button class="option-btn" data-answer="nous">nous</button>
+                        <button class="option-btn" data-answer="vous">vous</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ps-4">
+                    <p class="question">Vul het juiste voornaamwoord in:</p>
+                    <p class="sentence">___ aime le chocolat. (ik)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="je">je</button>
+                        <button class="option-btn" data-answer="j'" data-correct="true">j'</button>
+                        <button class="option-btn" data-answer="tu">tu</button>
+                        <button class="option-btn" data-answer="il">il</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ps-5">
+                    <p class="question">Kies het juiste persoonlijk voornaamwoord:</p>
+                    <p class="sentence">Mon père travaille beaucoup. ___ est fatigué.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="il" data-correct="true">il</button>
+                        <button class="option-btn" data-answer="elle">elle</button>
+                        <button class="option-btn" data-answer="ils">ils</button>
+                        <button class="option-btn" data-answer="on">on</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- La Négation -->
+        <section id="negation" class="topic-section">
+            <h2>La négation</h2>
+            <div class="theory-box">
+                <h3>📚 Theorie</h3>
+                <p>De ontkenning in het Frans bestaat uit twee delen rond het werkwoord:</p>
+                <table class="grammar-table">
+                    <tr>
+                        <th>Frans</th>
+                        <th>Nederlands</th>
+                        <th>Voorbeeld</th>
+                    </tr>
+                    <tr><td>ne ... pas</td><td>niet</td><td>Je <strong>ne</strong> parle <strong>pas</strong></td></tr>
+                    <tr><td>ne ... plus</td><td>niet meer</td><td>Je <strong>ne</strong> mange <strong>plus</strong></td></tr>
+                    <tr><td>ne ... jamais</td><td>nooit</td><td>Je <strong>ne</strong> fume <strong>jamais</strong></td></tr>
+                    <tr><td>ne ... rien</td><td>niets</td><td>Je <strong>ne</strong> vois <strong>rien</strong></td></tr>
+                    <tr><td>ne ... personne</td><td>niemand</td><td>Je <strong>ne</strong> connais <strong>personne</strong></td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> <em>ne</em> wordt <em>n'</em> voor een klinker: Je <strong>n'</strong>aime <strong>pas</strong>
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="negation">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="neg-1">
+                    <p class="question">Maak de zin negatief (niet):</p>
+                    <p class="sentence">Je parle français. → Je ___ parle ___ français.</p>
+                    <div class="fill-blanks">
+                        <input type="text" class="blank-input" data-answer="ne" placeholder="...">
+                        <input type="text" class="blank-input" data-answer="pas" placeholder="...">
+                    </div>
+                    <button class="check-btn">Controleer</button>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="neg-2">
+                    <p class="question">Maak de zin negatief (nooit):</p>
+                    <p class="sentence">Il mange des légumes. → Il ___ mange ___ de légumes.</p>
+                    <div class="fill-blanks">
+                        <input type="text" class="blank-input" data-answer="ne" placeholder="...">
+                        <input type="text" class="blank-input" data-answer="jamais" placeholder="...">
+                    </div>
+                    <button class="check-btn">Controleer</button>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="neg-3">
+                    <p class="question">Maak de zin negatief (niet meer):</p>
+                    <p class="sentence">Elle habite à Paris. → Elle ___ habite ___ à Paris.</p>
+                    <div class="fill-blanks">
+                        <input type="text" class="blank-input" data-answer="n'" placeholder="...">
+                        <input type="text" class="blank-input" data-answer="plus" placeholder="...">
+                    </div>
+                    <button class="check-btn">Controleer</button>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="neg-4">
+                    <p class="question">Kies de juiste ontkenning:</p>
+                    <p class="sentence">"Ik zie niets" = Je ne vois ___</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="pas">pas</button>
+                        <button class="option-btn" data-answer="plus">plus</button>
+                        <button class="option-btn" data-answer="jamais">jamais</button>
+                        <button class="option-btn" data-answer="rien" data-correct="true">rien</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="neg-5">
+                    <p class="question">Kies de juiste ontkenning:</p>
+                    <p class="sentence">"Hij rookt niet meer" = Il ne fume ___</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="pas">pas</button>
+                        <button class="option-btn" data-answer="plus" data-correct="true">plus</button>
+                        <button class="option-btn" data-answer="jamais">jamais</button>
+                        <button class="option-btn" data-answer="rien">rien</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Être / Avoir / Verbes en -ER -->
+        <section id="etre-avoir" class="topic-section">
+            <h2>Être / Avoir / Les verbes en -ER</h2>
+            <div class="theory-box">
+                <h3>📚 Être (zijn)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>je suis</td><td>nous sommes</td></tr>
+                    <tr><td>tu es</td><td>vous êtes</td></tr>
+                    <tr><td>il/elle/on est</td><td>ils/elles sont</td></tr>
+                </table>
+
+                <h3>📚 Avoir (hebben)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>j'ai</td><td>nous avons</td></tr>
+                    <tr><td>tu as</td><td>vous avez</td></tr>
+                    <tr><td>il/elle/on a</td><td>ils/elles ont</td></tr>
+                </table>
+
+                <h3>📚 Verbes en -ER (parler, aimer, habiter...)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>je parle</td><td>nous parlons</td></tr>
+                    <tr><td>tu parles</td><td>vous parlez</td></tr>
+                    <tr><td>il/elle/on parle</td><td>ils/elles parlent</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> Werkwoorden op -ER: verwijder -er, voeg toe: -e, -es, -e, -ons, -ez, -ent
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="etre-avoir">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="ea-1">
+                    <p class="question">Vervoeg ÊTRE:</p>
+                    <p class="sentence">Je ___ belge.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="suis" data-correct="true">suis</button>
+                        <button class="option-btn" data-answer="es">es</button>
+                        <button class="option-btn" data-answer="est">est</button>
+                        <button class="option-btn" data-answer="ai">ai</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ea-2">
+                    <p class="question">Vervoeg AVOIR:</p>
+                    <p class="sentence">Tu ___ 14 ans.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ai">ai</button>
+                        <button class="option-btn" data-answer="as" data-correct="true">as</button>
+                        <button class="option-btn" data-answer="a">a</button>
+                        <button class="option-btn" data-answer="es">es</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ea-3">
+                    <p class="question">Vervoeg PARLER:</p>
+                    <p class="sentence">Nous ___ français.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="parle">parle</button>
+                        <button class="option-btn" data-answer="parles">parles</button>
+                        <button class="option-btn" data-answer="parlons" data-correct="true">parlons</button>
+                        <button class="option-btn" data-answer="parlent">parlent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ea-4">
+                    <p class="question">Vervoeg HABITER:</p>
+                    <p class="sentence">Ils ___ à Bruxelles.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="habite">habite</button>
+                        <button class="option-btn" data-answer="habites">habites</button>
+                        <button class="option-btn" data-answer="habitons">habitons</button>
+                        <button class="option-btn" data-answer="habitent" data-correct="true">habitent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ea-5">
+                    <p class="question">Vervoeg ÊTRE:</p>
+                    <p class="sentence">Vous ___ contents.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="sommes">sommes</button>
+                        <button class="option-btn" data-answer="êtes" data-correct="true">êtes</button>
+                        <button class="option-btn" data-answer="sont">sont</button>
+                        <button class="option-btn" data-answer="est">est</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ea-6">
+                    <p class="question">Vervoeg AIMER:</p>
+                    <p class="sentence">Elle ___ le chocolat.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="aime" data-correct="true">aime</button>
+                        <button class="option-btn" data-answer="aimes">aimes</button>
+                        <button class="option-btn" data-answer="aimons">aimons</button>
+                        <button class="option-btn" data-answer="aiment">aiment</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Les verbes en -RE -->
+        <section id="verbes-re" class="topic-section">
+            <h2>Les verbes en -RE (prendre, mettre, attendre...)</h2>
+            <div class="theory-box">
+                <h3>📚 PRENDRE (nemen)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>je prends</td><td>nous prenons</td></tr>
+                    <tr><td>tu prends</td><td>vous prenez</td></tr>
+                    <tr><td>il/elle/on prend</td><td>ils/elles prennent</td></tr>
+                </table>
+
+                <h3>📚 METTRE (zetten/leggen/aandoen)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>je mets</td><td>nous mettons</td></tr>
+                    <tr><td>tu mets</td><td>vous mettez</td></tr>
+                    <tr><td>il/elle/on met</td><td>ils/elles mettent</td></tr>
+                </table>
+
+                <h3>📚 ATTENDRE (wachten)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>j'attends</td><td>nous attendons</td></tr>
+                    <tr><td>tu attends</td><td>vous attendez</td></tr>
+                    <tr><td>il/elle/on attend</td><td>ils/elles attendent</td></tr>
+                </table>
+            </div>
+            <div class="exercise-container" data-topic="verbes-re">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="re-1">
+                    <p class="question">Vervoeg PRENDRE:</p>
+                    <p class="sentence">Je ___ le bus.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="prends" data-correct="true">prends</button>
+                        <button class="option-btn" data-answer="prend">prend</button>
+                        <button class="option-btn" data-answer="prenons">prenons</button>
+                        <button class="option-btn" data-answer="prennent">prennent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="re-2">
+                    <p class="question">Vervoeg METTRE:</p>
+                    <p class="sentence">Elle ___ sa veste.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="mets">mets</button>
+                        <button class="option-btn" data-answer="met" data-correct="true">met</button>
+                        <button class="option-btn" data-answer="mettons">mettons</button>
+                        <button class="option-btn" data-answer="mettent">mettent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="re-3">
+                    <p class="question">Vervoeg ATTENDRE:</p>
+                    <p class="sentence">Nous ___ le train.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="attends">attends</button>
+                        <button class="option-btn" data-answer="attend">attend</button>
+                        <button class="option-btn" data-answer="attendons" data-correct="true">attendons</button>
+                        <button class="option-btn" data-answer="attendent">attendent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="re-4">
+                    <p class="question">Vervoeg PRENDRE:</p>
+                    <p class="sentence">Ils ___ des photos.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="prends">prends</button>
+                        <button class="option-btn" data-answer="prend">prend</button>
+                        <button class="option-btn" data-answer="prenons">prenons</button>
+                        <button class="option-btn" data-answer="prennent" data-correct="true">prennent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="re-5">
+                    <p class="question">Vervoeg METTRE:</p>
+                    <p class="sentence">Vous ___ la table.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="mets">mets</button>
+                        <button class="option-btn" data-answer="met">met</button>
+                        <button class="option-btn" data-answer="mettons">mettons</button>
+                        <button class="option-btn" data-answer="mettez" data-correct="true">mettez</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Les verbes en -IR -->
+        <section id="verbes-ir" class="topic-section">
+            <h2>Les verbes en -IR</h2>
+            <div class="theory-box">
+                <h3>📚 Type SORTIR (uitgaan)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>je sors</td><td>nous sortons</td></tr>
+                    <tr><td>tu sors</td><td>vous sortez</td></tr>
+                    <tr><td>il/elle/on sort</td><td>ils/elles sortent</td></tr>
+                </table>
+                <p><em>Zoals sortir: partir, dormir, servir</em></p>
+
+                <h3>📚 Type FINIR (eindigen)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>je finis</td><td>nous finissons</td></tr>
+                    <tr><td>tu finis</td><td>vous finissez</td></tr>
+                    <tr><td>il/elle/on finit</td><td>ils/elles finissent</td></tr>
+                </table>
+                <p><em>Zoals finir: choisir, réussir, remplir</em></p>
+
+                <h3>📚 Type OUVRIR (openen)</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>j'ouvre</td><td>nous ouvrons</td></tr>
+                    <tr><td>tu ouvres</td><td>vous ouvrez</td></tr>
+                    <tr><td>il/elle/on ouvre</td><td>ils/elles ouvrent</td></tr>
+                </table>
+                <p><em>Zoals ouvrir: offrir, découvrir</em></p>
+            </div>
+            <div class="exercise-container" data-topic="verbes-ir">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="ir-1">
+                    <p class="question">Vervoeg SORTIR:</p>
+                    <p class="sentence">Je ___ ce soir.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="sors" data-correct="true">sors</button>
+                        <button class="option-btn" data-answer="sort">sort</button>
+                        <button class="option-btn" data-answer="sortons">sortons</button>
+                        <button class="option-btn" data-answer="sortent">sortent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ir-2">
+                    <p class="question">Vervoeg FINIR:</p>
+                    <p class="sentence">Nous ___ nos devoirs.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="finis">finis</button>
+                        <button class="option-btn" data-answer="finit">finit</button>
+                        <button class="option-btn" data-answer="finissons" data-correct="true">finissons</button>
+                        <button class="option-btn" data-answer="finissent">finissent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ir-3">
+                    <p class="question">Vervoeg OUVRIR:</p>
+                    <p class="sentence">Elle ___ la porte.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ouvres">ouvres</button>
+                        <button class="option-btn" data-answer="ouvre" data-correct="true">ouvre</button>
+                        <button class="option-btn" data-answer="ouvrons">ouvrons</button>
+                        <button class="option-btn" data-answer="ouvrent">ouvrent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ir-4">
+                    <p class="question">Vervoeg DORMIR:</p>
+                    <p class="sentence">Ils ___ bien.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="dors">dors</button>
+                        <button class="option-btn" data-answer="dort">dort</button>
+                        <button class="option-btn" data-answer="dormons">dormons</button>
+                        <button class="option-btn" data-answer="dorment" data-correct="true">dorment</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ir-5">
+                    <p class="question">Vervoeg CHOISIR:</p>
+                    <p class="sentence">Tu ___ un cadeau.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="choisis" data-correct="true">choisis</button>
+                        <button class="option-btn" data-answer="choisit">choisit</button>
+                        <button class="option-btn" data-answer="choisissons">choisissons</button>
+                        <button class="option-btn" data-answer="choisissent">choisissent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- La Question -->
+        <section id="questions" class="topic-section">
+            <h2>La question</h2>
+            <div class="theory-box">
+                <h3>📚 Drie manieren om een vraag te stellen:</h3>
+                <table class="grammar-table">
+                    <tr>
+                        <th>Methode</th>
+                        <th>Voorbeeld</th>
+                    </tr>
+                    <tr>
+                        <td>1. Intonatie (spreektaal)</td>
+                        <td>Tu parles français<strong>?</strong></td>
+                    </tr>
+                    <tr>
+                        <td>2. Est-ce que</td>
+                        <td><strong>Est-ce que</strong> tu parles français?</td>
+                    </tr>
+                    <tr>
+                        <td>3. Inversie (formeel)</td>
+                        <td><strong>Parles-tu</strong> français?</td>
+                    </tr>
+                </table>
+
+                <h3>📚 Vraagwoorden:</h3>
+                <table class="grammar-table">
+                    <tr><td>Qui?</td><td>Wie?</td></tr>
+                    <tr><td>Que / Qu'est-ce que?</td><td>Wat?</td></tr>
+                    <tr><td>Où?</td><td>Waar?</td></tr>
+                    <tr><td>Quand?</td><td>Wanneer?</td></tr>
+                    <tr><td>Comment?</td><td>Hoe?</td></tr>
+                    <tr><td>Pourquoi?</td><td>Waarom?</td></tr>
+                    <tr><td>Combien (de)?</td><td>Hoeveel?</td></tr>
+                    <tr><td>Quel(le)(s)?</td><td>Welk(e)?</td></tr>
+                </table>
+            </div>
+            <div class="exercise-container" data-topic="questions">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="q-1">
+                    <p class="question">Welk vraagwoord past?</p>
+                    <p class="sentence">___ habites-tu? - J'habite à Bruxelles.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Qui">Qui</button>
+                        <button class="option-btn" data-answer="Où" data-correct="true">Où</button>
+                        <button class="option-btn" data-answer="Quand">Quand</button>
+                        <button class="option-btn" data-answer="Comment">Comment</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="q-2">
+                    <p class="question">Welk vraagwoord past?</p>
+                    <p class="sentence">___ est ton professeur? - C'est Madame Dubois.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Qui" data-correct="true">Qui</button>
+                        <button class="option-btn" data-answer="Que">Que</button>
+                        <button class="option-btn" data-answer="Où">Où</button>
+                        <button class="option-btn" data-answer="Comment">Comment</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="q-3">
+                    <p class="question">Welk vraagwoord past?</p>
+                    <p class="sentence">___ tu ne viens pas? - Parce que je suis malade.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Quand">Quand</button>
+                        <button class="option-btn" data-answer="Comment">Comment</button>
+                        <button class="option-btn" data-answer="Pourquoi" data-correct="true">Pourquoi</button>
+                        <button class="option-btn" data-answer="Combien">Combien</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="q-4">
+                    <p class="question">Welk vraagwoord past?</p>
+                    <p class="sentence">___ t'appelles-tu? - Je m'appelle Marie.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Qui">Qui</button>
+                        <button class="option-btn" data-answer="Que">Que</button>
+                        <button class="option-btn" data-answer="Comment" data-correct="true">Comment</button>
+                        <button class="option-btn" data-answer="Où">Où</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="q-5">
+                    <p class="question">Welk vraagwoord past?</p>
+                    <p class="sentence">___ de frères as-tu? - J'ai deux frères.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Quand">Quand</button>
+                        <button class="option-btn" data-answer="Combien" data-correct="true">Combien</button>
+                        <button class="option-btn" data-answer="Quel">Quel</button>
+                        <button class="option-btn" data-answer="Pourquoi">Pourquoi</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- L'adjectif possessif -->
+        <section id="adj-possessif" class="topic-section">
+            <h2>L'adjectif possessif</h2>
+            <div class="theory-box">
+                <h3>📚 Bezittelijke voornaamwoorden</h3>
+                <table class="grammar-table">
+                    <tr>
+                        <th></th>
+                        <th>Mannelijk enk.</th>
+                        <th>Vrouwelijk enk.</th>
+                        <th>Meervoud</th>
+                    </tr>
+                    <tr><td>mijn</td><td>mon</td><td>ma</td><td>mes</td></tr>
+                    <tr><td>jouw</td><td>ton</td><td>ta</td><td>tes</td></tr>
+                    <tr><td>zijn/haar</td><td>son</td><td>sa</td><td>ses</td></tr>
+                    <tr><td>ons/onze</td><td colspan="2">notre</td><td>nos</td></tr>
+                    <tr><td>jullie/uw</td><td colspan="2">votre</td><td>vos</td></tr>
+                    <tr><td>hun</td><td colspan="2">leur</td><td>leurs</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> Voor vrouwelijke woorden die met een klinker beginnen: mon amie, ton école, son histoire
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="adj-possessif">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="ap-1">
+                    <p class="question">Kies het juiste bezittelijk voornaamwoord:</p>
+                    <p class="sentence">J'aime ___ mère. (mijn - vrouwelijk)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="mon">mon</button>
+                        <button class="option-btn" data-answer="ma" data-correct="true">ma</button>
+                        <button class="option-btn" data-answer="mes">mes</button>
+                        <button class="option-btn" data-answer="sa">sa</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ap-2">
+                    <p class="question">Kies het juiste bezittelijk voornaamwoord:</p>
+                    <p class="sentence">Il adore ___ chien. (zijn - mannelijk)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="mon">mon</button>
+                        <button class="option-btn" data-answer="son" data-correct="true">son</button>
+                        <button class="option-btn" data-answer="sa">sa</button>
+                        <button class="option-btn" data-answer="ses">ses</td></tr>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ap-3">
+                    <p class="question">Kies het juiste bezittelijk voornaamwoord:</p>
+                    <p class="sentence">Nous aimons ___ parents. (onze - meervoud)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="notre">notre</button>
+                        <button class="option-btn" data-answer="nos" data-correct="true">nos</button>
+                        <button class="option-btn" data-answer="votre">votre</button>
+                        <button class="option-btn" data-answer="vos">vos</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ap-4">
+                    <p class="question">Kies het juiste bezittelijk voornaamwoord:</p>
+                    <p class="sentence">Tu as ___ livres? (jouw - meervoud)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ton">ton</button>
+                        <button class="option-btn" data-answer="ta">ta</button>
+                        <button class="option-btn" data-answer="tes" data-correct="true">tes</button>
+                        <button class="option-btn" data-answer="ses">ses</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ap-5">
+                    <p class="question">Let op! Vrouwelijk woord met klinker:</p>
+                    <p class="sentence">J'aime ___ amie Sophie. (mijn)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="mon" data-correct="true">mon</button>
+                        <button class="option-btn" data-answer="ma">ma</button>
+                        <button class="option-btn" data-answer="mes">mes</button>
+                        <button class="option-btn" data-answer="sa">sa</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- L'adjectif qualificatif -->
+        <section id="adj-qualificatif" class="topic-section">
+            <h2>L'adjectif qualificatif</h2>
+            <div class="theory-box">
+                <h3>📚 Bijvoeglijke naamwoorden</h3>
+                <p>Het bijvoeglijk naamwoord past zich aan aan het zelfstandig naamwoord:</p>
+                <table class="grammar-table">
+                    <tr>
+                        <th></th>
+                        <th>Mannelijk</th>
+                        <th>Vrouwelijk</th>
+                    </tr>
+                    <tr>
+                        <td>Enkelvoud</td>
+                        <td>petit</td>
+                        <td>petit<strong>e</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Meervoud</td>
+                        <td>petit<strong>s</strong></td>
+                        <td>petit<strong>es</strong></td>
+                    </tr>
+                </table>
+
+                <h3>📚 Bijzondere vormen:</h3>
+                <table class="grammar-table">
+                    <tr><th>Mannelijk</th><th>Vrouwelijk</th></tr>
+                    <tr><td>beau (mooi)</td><td>belle</td></tr>
+                    <tr><td>nouveau (nieuw)</td><td>nouvelle</td></tr>
+                    <tr><td>vieux (oud)</td><td>vieille</td></tr>
+                    <tr><td>blanc (wit)</td><td>blanche</td></tr>
+                    <tr><td>gentil (aardig)</td><td>gentille</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> Beau, nouveau, vieux staan VOOR het zelfstandig naamwoord!
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="adj-qualificatif">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="aq-1">
+                    <p class="question">Pas het bijvoeglijk naamwoord aan:</p>
+                    <p class="sentence">Ma sœur est ___ (petit)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="petit">petit</button>
+                        <button class="option-btn" data-answer="petite" data-correct="true">petite</button>
+                        <button class="option-btn" data-answer="petits">petits</button>
+                        <button class="option-btn" data-answer="petites">petites</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="aq-2">
+                    <p class="question">Pas het bijvoeglijk naamwoord aan:</p>
+                    <p class="sentence">Les filles sont ___ (content)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="content">content</button>
+                        <button class="option-btn" data-answer="contente">contente</button>
+                        <button class="option-btn" data-answer="contents">contents</button>
+                        <button class="option-btn" data-answer="contentes" data-correct="true">contentes</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="aq-3">
+                    <p class="question">Kies de juiste vorm:</p>
+                    <p class="sentence">C'est une ___ maison. (mooi)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="beau">beau</button>
+                        <button class="option-btn" data-answer="belle" data-correct="true">belle</button>
+                        <button class="option-btn" data-answer="beaux">beaux</button>
+                        <button class="option-btn" data-answer="belles">belles</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="aq-4">
+                    <p class="question">Kies de juiste vorm:</p>
+                    <p class="sentence">J'ai une ___ voiture. (nieuw)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="nouveau">nouveau</button>
+                        <button class="option-btn" data-answer="nouvelle" data-correct="true">nouvelle</button>
+                        <button class="option-btn" data-answer="nouveaux">nouveaux</button>
+                        <button class="option-btn" data-answer="nouvelles">nouvelles</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="aq-5">
+                    <p class="question">Kies de juiste vorm:</p>
+                    <p class="sentence">Ce sont de ___ livres. (oud)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="vieux" data-correct="true">vieux</button>
+                        <button class="option-btn" data-answer="vieille">vieille</button>
+                        <button class="option-btn" data-answer="vieilles">vieilles</button>
+                        <button class="option-btn" data-answer="vieil">vieil</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Les verbes pronominaux -->
+        <section id="verbes-pronominaux" class="topic-section">
+            <h2>Les verbes pronominaux</h2>
+            <div class="theory-box">
+                <h3>📚 Wederkerende werkwoorden</h3>
+                <p>Deze werkwoorden hebben een wederkerend voornaamwoord (me, te, se, nous, vous, se):</p>
+                <table class="grammar-table conjugation">
+                    <tr><td>je <strong>me</strong> lève</td><td>nous <strong>nous</strong> levons</td></tr>
+                    <tr><td>tu <strong>te</strong> lèves</td><td>vous <strong>vous</strong> levez</td></tr>
+                    <tr><td>il/elle <strong>se</strong> lève</td><td>ils/elles <strong>se</strong> lèvent</td></tr>
+                </table>
+                <h3>Voorbeelden:</h3>
+                <ul>
+                    <li>se lever - opstaan</li>
+                    <li>se laver - zich wassen</li>
+                    <li>se coucher - gaan slapen</li>
+                    <li>s'habiller - zich aankleden</li>
+                    <li>se réveiller - wakker worden</li>
+                </ul>
+            </div>
+            <div class="exercise-container" data-topic="verbes-pronominaux">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="vp-1">
+                    <p class="question">Vervoeg SE LEVER:</p>
+                    <p class="sentence">Je ___ ___ à 7 heures.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="me lève" data-correct="true">me lève</button>
+                        <button class="option-btn" data-answer="te lèves">te lèves</button>
+                        <button class="option-btn" data-answer="se lève">se lève</button>
+                        <button class="option-btn" data-answer="nous levons">nous levons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="vp-2">
+                    <p class="question">Vervoeg SE LAVER:</p>
+                    <p class="sentence">Elle ___ ___ le matin.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="me lave">me lave</button>
+                        <button class="option-btn" data-answer="te laves">te laves</button>
+                        <button class="option-btn" data-answer="se lave" data-correct="true">se lave</button>
+                        <button class="option-btn" data-answer="nous lavons">nous lavons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="vp-3">
+                    <p class="question">Vervoeg SE COUCHER:</p>
+                    <p class="sentence">Nous ___ ___ à 22 heures.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="me couche">me couche</button>
+                        <button class="option-btn" data-answer="se couche">se couche</button>
+                        <button class="option-btn" data-answer="nous couchons" data-correct="true">nous couchons</button>
+                        <button class="option-btn" data-answer="vous couchez">vous couchez</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="vp-4">
+                    <p class="question">Vervoeg S'HABILLER:</p>
+                    <p class="sentence">Tu ___ vite.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="m'habille">m'habille</button>
+                        <button class="option-btn" data-answer="t'habilles" data-correct="true">t'habilles</button>
+                        <button class="option-btn" data-answer="s'habille">s'habille</button>
+                        <button class="option-btn" data-answer="nous habillons">nous habillons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="vp-5">
+                    <p class="question">Vervoeg SE RÉVEILLER:</p>
+                    <p class="sentence">Ils ___ ___ tôt.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="me réveille">me réveille</button>
+                        <button class="option-btn" data-answer="se réveille">se réveille</button>
+                        <button class="option-btn" data-answer="nous réveillons">nous réveillons</button>
+                        <button class="option-btn" data-answer="se réveillent" data-correct="true">se réveillent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- L'adjectif démonstratif -->
+        <section id="adj-demonstratif" class="topic-section">
+            <h2>L'adjectif démonstratif</h2>
+            <div class="theory-box">
+                <h3>📚 Aanwijzende voornaamwoorden</h3>
+                <table class="grammar-table">
+                    <tr>
+                        <th></th>
+                        <th>Mannelijk</th>
+                        <th>Vrouwelijk</th>
+                    </tr>
+                    <tr>
+                        <td>Enkelvoud</td>
+                        <td>ce / cet*</td>
+                        <td>cette</td>
+                    </tr>
+                    <tr>
+                        <td>Meervoud</td>
+                        <td colspan="2">ces</td>
+                    </tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> *Gebruik <em>cet</em> voor mannelijke woorden die beginnen met een klinker of stomme h: cet homme, cet arbre
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="adj-demonstratif">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="ad-1">
+                    <p class="question">Kies het juiste aanwijzend voornaamwoord:</p>
+                    <p class="sentence">___ livre est intéressant. (mannelijk)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ce" data-correct="true">ce</button>
+                        <button class="option-btn" data-answer="cet">cet</button>
+                        <button class="option-btn" data-answer="cette">cette</button>
+                        <button class="option-btn" data-answer="ces">ces</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ad-2">
+                    <p class="question">Kies het juiste aanwijzend voornaamwoord:</p>
+                    <p class="sentence">___ fille est sympa. (vrouwelijk)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ce">ce</button>
+                        <button class="option-btn" data-answer="cet">cet</button>
+                        <button class="option-btn" data-answer="cette" data-correct="true">cette</button>
+                        <button class="option-btn" data-answer="ces">ces</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ad-3">
+                    <p class="question">Kies het juiste aanwijzend voornaamwoord:</p>
+                    <p class="sentence">___ homme est grand. (mannelijk + klinker)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ce">ce</button>
+                        <button class="option-btn" data-answer="cet" data-correct="true">cet</button>
+                        <button class="option-btn" data-answer="cette">cette</button>
+                        <button class="option-btn" data-answer="ces">ces</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ad-4">
+                    <p class="question">Kies het juiste aanwijzend voornaamwoord:</p>
+                    <p class="sentence">___ enfants sont contents. (meervoud)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ce">ce</button>
+                        <button class="option-btn" data-answer="cet">cet</button>
+                        <button class="option-btn" data-answer="cette">cette</button>
+                        <button class="option-btn" data-answer="ces" data-correct="true">ces</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="ad-5">
+                    <p class="question">Kies het juiste aanwijzend voornaamwoord:</p>
+                    <p class="sentence">___ arbre est très vieux. (mannelijk + klinker)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ce">ce</button>
+                        <button class="option-btn" data-answer="cet" data-correct="true">cet</button>
+                        <button class="option-btn" data-answer="cette">cette</button>
+                        <button class="option-btn" data-answer="ces">ces</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- L'article partitif -->
+        <section id="article-partitif" class="topic-section">
+            <h2>L'article partitif</h2>
+            <div class="theory-box">
+                <h3>📚 Delend lidwoord (wat/een beetje van)</h3>
+                <table class="grammar-table">
+                    <tr>
+                        <th>Mannelijk</th>
+                        <th>Vrouwelijk</th>
+                        <th>Voor klinker</th>
+                        <th>Meervoud</th>
+                    </tr>
+                    <tr>
+                        <td>du</td>
+                        <td>de la</td>
+                        <td>de l'</td>
+                        <td>des</td>
+                    </tr>
+                </table>
+                <h3>Voorbeelden:</h3>
+                <ul>
+                    <li>Je mange <strong>du</strong> pain. (ik eet brood)</li>
+                    <li>Je bois <strong>de la</strong> limonade. (ik drink limonade)</li>
+                    <li>Je bois <strong>de l'</strong>eau. (ik drink water)</li>
+                    <li>Je mange <strong>des</strong> fruits. (ik eet fruit)</li>
+                </ul>
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> Na een ontkenning wordt het delend lidwoord <strong>de/d'</strong>: Je ne mange pas <strong>de</strong> pain.
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="article-partitif">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="part-1">
+                    <p class="question">Kies het juiste delend lidwoord:</p>
+                    <p class="sentence">Je mange ___ fromage. (kaas - mannelijk)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="du" data-correct="true">du</button>
+                        <button class="option-btn" data-answer="de la">de la</button>
+                        <button class="option-btn" data-answer="de l'">de l'</button>
+                        <button class="option-btn" data-answer="des">des</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="part-2">
+                    <p class="question">Kies het juiste delend lidwoord:</p>
+                    <p class="sentence">Elle boit ___ eau. (water - voor klinker)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="du">du</button>
+                        <button class="option-btn" data-answer="de la">de la</button>
+                        <button class="option-btn" data-answer="de l'" data-correct="true">de l'</button>
+                        <button class="option-btn" data-answer="des">des</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="part-3">
+                    <p class="question">Kies het juiste delend lidwoord:</p>
+                    <p class="sentence">Tu veux ___ confiture? (jam - vrouwelijk)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="du">du</button>
+                        <button class="option-btn" data-answer="de la" data-correct="true">de la</button>
+                        <button class="option-btn" data-answer="de l'">de l'</button>
+                        <button class="option-btn" data-answer="des">des</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="part-4">
+                    <p class="question">Let op de ontkenning:</p>
+                    <p class="sentence">Je ne mange pas ___ viande.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="du">du</button>
+                        <button class="option-btn" data-answer="de la">de la</button>
+                        <button class="option-btn" data-answer="de" data-correct="true">de</button>
+                        <button class="option-btn" data-answer="des">des</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="part-5">
+                    <p class="question">Kies het juiste delend lidwoord:</p>
+                    <p class="sentence">Nous achetons ___ légumes. (groenten - meervoud)</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="du">du</button>
+                        <button class="option-btn" data-answer="de la">de la</button>
+                        <button class="option-btn" data-answer="de l'">de l'</button>
+                        <button class="option-btn" data-answer="des" data-correct="true">des</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- L'imparfait -->
+        <section id="imparfait" class="topic-section">
+            <h2>L'imparfait</h2>
+            <div class="theory-box">
+                <h3>📚 De onvoltooid verleden tijd</h3>
+                <p>Stam van nous-vorm in tegenwoordige tijd + uitgangen:</p>
+                <table class="grammar-table conjugation">
+                    <tr><td>je parlais</td><td>nous parlions</td></tr>
+                    <tr><td>tu parlais</td><td>vous parliez</td></tr>
+                    <tr><td>il/elle/on parlait</td><td>ils/elles parlaient</td></tr>
+                </table>
+                <h3>Uitgangen:</h3>
+                <p><strong>-ais, -ais, -ait, -ions, -iez, -aient</strong></p>
+                <div class="tip-box">
+                    <strong>💡 Gebruik:</strong> Beschrijvingen in het verleden, gewoontes, achtergrond van een verhaal
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="imparfait">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="imp-1">
+                    <p class="question">Vervoeg in de imparfait:</p>
+                    <p class="sentence">Quand j'étais petit, je ___ (jouer) souvent dehors.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="joue">joue</button>
+                        <button class="option-btn" data-answer="jouais" data-correct="true">jouais</button>
+                        <button class="option-btn" data-answer="jouerai">jouerai</button>
+                        <button class="option-btn" data-answer="ai joué">ai joué</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imp-2">
+                    <p class="question">Vervoeg in de imparfait:</p>
+                    <p class="sentence">Il ___ (faire) beau hier.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="fait">fait</button>
+                        <button class="option-btn" data-answer="faisait" data-correct="true">faisait</button>
+                        <button class="option-btn" data-answer="fera">fera</button>
+                        <button class="option-btn" data-answer="a fait">a fait</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imp-3">
+                    <p class="question">Vervoeg in de imparfait:</p>
+                    <p class="sentence">Nous ___ (habiter) à Paris avant.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="habitons">habitons</button>
+                        <button class="option-btn" data-answer="habitions" data-correct="true">habitions</button>
+                        <button class="option-btn" data-answer="habiterons">habiterons</button>
+                        <button class="option-btn" data-answer="avons habité">avons habité</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imp-4">
+                    <p class="question">Vervoeg in de imparfait:</p>
+                    <p class="sentence">Elles ___ (être) contentes.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="sont">sont</button>
+                        <button class="option-btn" data-answer="étaient" data-correct="true">étaient</button>
+                        <button class="option-btn" data-answer="seront">seront</button>
+                        <button class="option-btn" data-answer="ont été">ont été</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imp-5">
+                    <p class="question">Vervoeg in de imparfait:</p>
+                    <p class="sentence">Vous ___ (avoir) un chien?</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="avez">avez</button>
+                        <button class="option-btn" data-answer="aviez" data-correct="true">aviez</button>
+                        <button class="option-btn" data-answer="aurez">aurez</button>
+                        <button class="option-btn" data-answer="avez eu">avez eu</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Le futur simple -->
+        <section id="futur-simple" class="topic-section">
+            <h2>Le futur simple</h2>
+            <div class="theory-box">
+                <h3>📚 De toekomende tijd</h3>
+                <p>Infinitief + uitgangen van avoir:</p>
+                <table class="grammar-table conjugation">
+                    <tr><td>je parlerai</td><td>nous parlerons</td></tr>
+                    <tr><td>tu parleras</td><td>vous parlerez</td></tr>
+                    <tr><td>il/elle/on parlera</td><td>ils/elles parleront</td></tr>
+                </table>
+                <h3>Onregelmatige stammen:</h3>
+                <ul>
+                    <li>être → ser- (je serai)</li>
+                    <li>avoir → aur- (j'aurai)</li>
+                    <li>aller → ir- (j'irai)</li>
+                    <li>faire → fer- (je ferai)</li>
+                    <li>venir → viendr- (je viendrai)</li>
+                    <li>pouvoir → pourr- (je pourrai)</li>
+                    <li>vouloir → voudr- (je voudrai)</li>
+                </ul>
+            </div>
+            <div class="exercise-container" data-topic="futur-simple">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="fs-1">
+                    <p class="question">Vervoeg in de futur simple:</p>
+                    <p class="sentence">Demain, je ___ (parler) à mon prof.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="parle">parle</button>
+                        <button class="option-btn" data-answer="parlais">parlais</button>
+                        <button class="option-btn" data-answer="parlerai" data-correct="true">parlerai</button>
+                        <button class="option-btn" data-answer="ai parlé">ai parlé</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fs-2">
+                    <p class="question">Vervoeg in de futur simple:</p>
+                    <p class="sentence">Tu ___ (être) là demain?</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="es">es</button>
+                        <button class="option-btn" data-answer="étais">étais</button>
+                        <button class="option-btn" data-answer="seras" data-correct="true">seras</button>
+                        <button class="option-btn" data-answer="as été">as été</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fs-3">
+                    <p class="question">Vervoeg in de futur simple:</p>
+                    <p class="sentence">Nous ___ (avoir) un examen lundi.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="avons">avons</button>
+                        <button class="option-btn" data-answer="avions">avions</button>
+                        <button class="option-btn" data-answer="aurons" data-correct="true">aurons</button>
+                        <button class="option-btn" data-answer="avons eu">avons eu</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fs-4">
+                    <p class="question">Vervoeg in de futur simple:</p>
+                    <p class="sentence">Elle ___ (aller) en France cet été.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="va">va</button>
+                        <button class="option-btn" data-answer="allait">allait</button>
+                        <button class="option-btn" data-answer="ira" data-correct="true">ira</button>
+                        <button class="option-btn" data-answer="est allée">est allée</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fs-5">
+                    <p class="question">Vervoeg in de futur simple:</p>
+                    <p class="sentence">Ils ___ (faire) leurs devoirs ce soir.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="font">font</button>
+                        <button class="option-btn" data-answer="faisaient">faisaient</button>
+                        <button class="option-btn" data-answer="feront" data-correct="true">feront</button>
+                        <button class="option-btn" data-answer="ont fait">ont fait</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Le conditionnel -->
+        <section id="conditionnel" class="topic-section">
+            <h2>Le conditionnel</h2>
+            <div class="theory-box">
+                <h3>📚 De voorwaardelijke wijs</h3>
+                <p>Stam van futur simple + uitgangen van imparfait:</p>
+                <table class="grammar-table conjugation">
+                    <tr><td>je parlerais</td><td>nous parlerions</td></tr>
+                    <tr><td>tu parlerais</td><td>vous parleriez</td></tr>
+                    <tr><td>il/elle/on parlerait</td><td>ils/elles parleraient</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Gebruik:</strong> Beleefdheid (je voudrais), wensen, hypothetische situaties
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="conditionnel">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="cond-1">
+                    <p class="question">Vervoeg in de conditionnel:</p>
+                    <p class="sentence">Je ___ (vouloir) un café, s'il vous plaît.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="veux">veux</button>
+                        <button class="option-btn" data-answer="voulais">voulais</button>
+                        <button class="option-btn" data-answer="voudrais" data-correct="true">voudrais</button>
+                        <button class="option-btn" data-answer="voudrai">voudrai</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cond-2">
+                    <p class="question">Vervoeg in de conditionnel:</p>
+                    <p class="sentence">Tu ___ (pouvoir) m'aider?</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="peux">peux</button>
+                        <button class="option-btn" data-answer="pouvais">pouvais</button>
+                        <button class="option-btn" data-answer="pourrais" data-correct="true">pourrais</button>
+                        <button class="option-btn" data-answer="pourras">pourras</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cond-3">
+                    <p class="question">Vervoeg in de conditionnel:</p>
+                    <p class="sentence">Nous ___ (aimer) voyager.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="aimons">aimons</button>
+                        <button class="option-btn" data-answer="aimions">aimions</button>
+                        <button class="option-btn" data-answer="aimerions" data-correct="true">aimerions</button>
+                        <button class="option-btn" data-answer="aimerons">aimerons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cond-4">
+                    <p class="question">Vervoeg in de conditionnel:</p>
+                    <p class="sentence">Il ___ (être) content de te voir.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="est">est</button>
+                        <button class="option-btn" data-answer="était">était</button>
+                        <button class="option-btn" data-answer="serait" data-correct="true">serait</button>
+                        <button class="option-btn" data-answer="sera">sera</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cond-5">
+                    <p class="question">Vervoeg in de conditionnel:</p>
+                    <p class="sentence">Elles ___ (avoir) besoin d'aide.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ont">ont</button>
+                        <button class="option-btn" data-answer="avaient">avaient</button>
+                        <button class="option-btn" data-answer="auraient" data-correct="true">auraient</button>
+                        <button class="option-btn" data-answer="auront">auront</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COD / COI -->
+        <section id="cod-coi" class="topic-section">
+            <h2>Les pronoms personnels COD / COI</h2>
+            <div class="theory-box">
+                <h3>📚 COD - Complément d'Objet Direct (lijdend voorwerp)</h3>
+                <table class="grammar-table">
+                    <tr><td>me / m'</td><td>mij</td></tr>
+                    <tr><td>te / t'</td><td>jou</td></tr>
+                    <tr><td>le / l'</td><td>hem / het</td></tr>
+                    <tr><td>la / l'</td><td>haar / het</td></tr>
+                    <tr><td>nous</td><td>ons</td></tr>
+                    <tr><td>vous</td><td>jullie / u</td></tr>
+                    <tr><td>les</td><td>hen / ze</td></tr>
+                </table>
+
+                <h3>📚 COI - Complément d'Objet Indirect (meewerkend voorwerp)</h3>
+                <table class="grammar-table">
+                    <tr><td>me / m'</td><td>aan mij</td></tr>
+                    <tr><td>te / t'</td><td>aan jou</td></tr>
+                    <tr><td>lui</td><td>aan hem/haar</td></tr>
+                    <tr><td>nous</td><td>aan ons</td></tr>
+                    <tr><td>vous</td><td>aan jullie/u</td></tr>
+                    <tr><td>leur</td><td>aan hen</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Positie:</strong> Het voornaamwoord staat VOOR het werkwoord: Je <strong>le</strong> vois. Je <strong>lui</strong> parle.
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="cod-coi">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="cc-1">
+                    <p class="question">Vervang door een COD:</p>
+                    <p class="sentence">Je vois Marie. → Je ___ vois.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="le">le</button>
+                        <button class="option-btn" data-answer="la" data-correct="true">la</button>
+                        <button class="option-btn" data-answer="lui">lui</button>
+                        <button class="option-btn" data-answer="leur">leur</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cc-2">
+                    <p class="question">Vervang door een COD:</p>
+                    <p class="sentence">Il regarde les films. → Il ___ regarde.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="le">le</button>
+                        <button class="option-btn" data-answer="la">la</button>
+                        <button class="option-btn" data-answer="les" data-correct="true">les</button>
+                        <button class="option-btn" data-answer="leur">leur</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cc-3">
+                    <p class="question">Vervang door een COI:</p>
+                    <p class="sentence">Je parle à Pierre. → Je ___ parle.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="le">le</button>
+                        <button class="option-btn" data-answer="la">la</button>
+                        <button class="option-btn" data-answer="lui" data-correct="true">lui</button>
+                        <button class="option-btn" data-answer="leur">leur</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cc-4">
+                    <p class="question">Vervang door een COI:</p>
+                    <p class="sentence">Elle donne le livre à ses amis. → Elle ___ donne le livre.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="les">les</button>
+                        <button class="option-btn" data-answer="lui">lui</button>
+                        <button class="option-btn" data-answer="leur" data-correct="true">leur</button>
+                        <button class="option-btn" data-answer="eux">eux</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="cc-5">
+                    <p class="question">COD of COI?</p>
+                    <p class="sentence">Tu aimes le chocolat? Oui, je ___ aime.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="le" data-correct="true">le (COD)</button>
+                        <button class="option-btn" data-answer="lui">lui (COI)</button>
+                        <button class="option-btn" data-answer="la">la (COD)</button>
+                        <button class="option-btn" data-answer="leur">leur (COI)</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Le passé composé -->
+        <section id="passe-compose" class="topic-section">
+            <h2>Le passé composé</h2>
+            <div class="theory-box">
+                <h3>📚 De voltooid tegenwoordige tijd</h3>
+                <p>avoir/être + voltooid deelwoord</p>
+
+                <h3>Met AVOIR (de meeste werkwoorden):</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>j'ai parlé</td><td>nous avons parlé</td></tr>
+                    <tr><td>tu as parlé</td><td>vous avez parlé</td></tr>
+                    <tr><td>il/elle a parlé</td><td>ils/elles ont parlé</td></tr>
+                </table>
+
+                <h3>Met ÊTRE (beweging/verandering + wederkerende ww):</h3>
+                <table class="grammar-table conjugation">
+                    <tr><td>je suis allé(e)</td><td>nous sommes allé(e)s</td></tr>
+                    <tr><td>tu es allé(e)</td><td>vous êtes allé(e)(s)</td></tr>
+                    <tr><td>il est allé / elle est allée</td><td>ils sont allés / elles sont allées</td></tr>
+                </table>
+
+                <h3>Voltooid deelwoord:</h3>
+                <ul>
+                    <li>-ER → -é (parlé, mangé)</li>
+                    <li>-IR → -i (fini, choisi)</li>
+                    <li>-RE → -u (vendu, attendu)</li>
+                </ul>
+                <div class="tip-box">
+                    <strong>💡 ÊTRE werkwoorden (MRS VANDERTRAMP):</strong><br>
+                    Monter, Rester, Sortir, Venir, Aller, Naître, Descendre, Entrer, Rentrer, Tomber, Retourner, Arriver, Mourir, Partir
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="passe-compose">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="pc-1">
+                    <p class="question">Vervoeg in de passé composé:</p>
+                    <p class="sentence">Hier, j' ___ (manger) une pizza.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ai mangé" data-correct="true">ai mangé</button>
+                        <button class="option-btn" data-answer="suis mangé">suis mangé</button>
+                        <button class="option-btn" data-answer="mangeais">mangeais</button>
+                        <button class="option-btn" data-answer="mangerai">mangerai</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="pc-2">
+                    <p class="question">Vervoeg in de passé composé:</p>
+                    <p class="sentence">Elle ___ (aller) à Paris.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="a allé">a allé</button>
+                        <button class="option-btn" data-answer="est allée" data-correct="true">est allée</button>
+                        <button class="option-btn" data-answer="allait">allait</button>
+                        <button class="option-btn" data-answer="ira">ira</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="pc-3">
+                    <p class="question">Vervoeg in de passé composé:</p>
+                    <p class="sentence">Nous ___ (finir) nos devoirs.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="sommes finis">sommes finis</button>
+                        <button class="option-btn" data-answer="avons fini" data-correct="true">avons fini</button>
+                        <button class="option-btn" data-answer="finissions">finissions</button>
+                        <button class="option-btn" data-answer="finirons">finirons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="pc-4">
+                    <p class="question">Vervoeg in de passé composé:</p>
+                    <p class="sentence">Ils ___ (venir) hier soir.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="ont venu">ont venu</button>
+                        <button class="option-btn" data-answer="sont venus" data-correct="true">sont venus</button>
+                        <button class="option-btn" data-answer="venaient">venaient</button>
+                        <button class="option-btn" data-answer="viendront">viendront</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="pc-5">
+                    <p class="question">Vervoeg in de passé composé (wederkerend ww):</p>
+                    <p class="sentence">Elle ___ (se lever) tôt.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="a levé">a levé</button>
+                        <button class="option-btn" data-answer="s'est levée" data-correct="true">s'est levée</button>
+                        <button class="option-btn" data-answer="se levait">se levait</button>
+                        <button class="option-btn" data-answer="se lèvera">se lèvera</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- L'impératif -->
+        <section id="imperatif" class="topic-section">
+            <h2>L'impératif</h2>
+            <div class="theory-box">
+                <h3>📚 De gebiedende wijs</h3>
+                <p>Alleen 3 vormen: tu, nous, vous (zonder onderwerp)</p>
+                <table class="grammar-table conjugation">
+                    <tr><th>Parler</th><th>Finir</th><th>Prendre</th></tr>
+                    <tr><td>Parle!</td><td>Finis!</td><td>Prends!</td></tr>
+                    <tr><td>Parlons!</td><td>Finissons!</td><td>Prenons!</td></tr>
+                    <tr><td>Parlez!</td><td>Finissez!</td><td>Prenez!</td></tr>
+                </table>
+                <h3>Bijzondere vormen:</h3>
+                <table class="grammar-table">
+                    <tr><th>Être</th><th>Avoir</th></tr>
+                    <tr><td>Sois!</td><td>Aie!</td></tr>
+                    <tr><td>Soyons!</td><td>Ayons!</td></tr>
+                    <tr><td>Soyez!</td><td>Ayez!</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Let op:</strong> Bij -ER werkwoorden valt de -s weg bij tu: Parle! (niet: Parles!)
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="imperatif">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="imp-1">
+                    <p class="question">Zet in de gebiedende wijs (tu):</p>
+                    <p class="sentence">___ (manger) tes légumes!</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Mange" data-correct="true">Mange</button>
+                        <button class="option-btn" data-answer="Manges">Manges</button>
+                        <button class="option-btn" data-answer="Mangez">Mangez</button>
+                        <button class="option-btn" data-answer="Mangeons">Mangeons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imper-2">
+                    <p class="question">Zet in de gebiedende wijs (vous):</p>
+                    <p class="sentence">___ (écouter) le professeur!</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Écoute">Écoute</button>
+                        <button class="option-btn" data-answer="Écoutes">Écoutes</button>
+                        <button class="option-btn" data-answer="Écoutez" data-correct="true">Écoutez</button>
+                        <button class="option-btn" data-answer="Écoutons">Écoutons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imper-3">
+                    <p class="question">Zet in de gebiedende wijs (nous):</p>
+                    <p class="sentence">___ (aller) au cinéma!</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Va">Va</button>
+                        <button class="option-btn" data-answer="Allez">Allez</button>
+                        <button class="option-btn" data-answer="Allons" data-correct="true">Allons</button>
+                        <button class="option-btn" data-answer="Vas">Vas</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imper-4">
+                    <p class="question">Zet in de gebiedende wijs (tu):</p>
+                    <p class="sentence">___ (être) sage!</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Es">Es</button>
+                        <button class="option-btn" data-answer="Sois" data-correct="true">Sois</button>
+                        <button class="option-btn" data-answer="Soyez">Soyez</button>
+                        <button class="option-btn" data-answer="Est">Est</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="imper-5">
+                    <p class="question">Zet in de gebiedende wijs (vous):</p>
+                    <p class="sentence">___ (avoir) confiance!</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="Aie">Aie</button>
+                        <button class="option-btn" data-answer="As">As</button>
+                        <button class="option-btn" data-answer="Ayez" data-correct="true">Ayez</button>
+                        <button class="option-btn" data-answer="Avez">Avez</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Le futur proche -->
+        <section id="futur-proche" class="topic-section">
+            <h2>Le futur proche</h2>
+            <div class="theory-box">
+                <h3>📚 De nabije toekomst</h3>
+                <p>aller (vervoegd) + infinitief</p>
+                <table class="grammar-table conjugation">
+                    <tr><td>je vais parler</td><td>nous allons parler</td></tr>
+                    <tr><td>tu vas parler</td><td>vous allez parler</td></tr>
+                    <tr><td>il/elle va parler</td><td>ils/elles vont parler</td></tr>
+                </table>
+                <div class="tip-box">
+                    <strong>💡 Gebruik:</strong> Voor iets dat binnenkort gaat gebeuren: Je vais manger. (Ik ga eten.)
+                </div>
+            </div>
+            <div class="exercise-container" data-topic="futur-proche">
+                <h3>✏️ Oefeningen</h3>
+                <div class="exercise" data-exercise-id="fp-1">
+                    <p class="question">Zet in de futur proche:</p>
+                    <p class="sentence">Je ___ (manger) bientôt.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="vais manger" data-correct="true">vais manger</button>
+                        <button class="option-btn" data-answer="vas manger">vas manger</button>
+                        <button class="option-btn" data-answer="mangerai">mangerai</button>
+                        <button class="option-btn" data-answer="mange">mange</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fp-2">
+                    <p class="question">Zet in de futur proche:</p>
+                    <p class="sentence">Tu ___ (partir) demain?</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="vais partir">vais partir</button>
+                        <button class="option-btn" data-answer="vas partir" data-correct="true">vas partir</button>
+                        <button class="option-btn" data-answer="partiras">partiras</button>
+                        <button class="option-btn" data-answer="pars">pars</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fp-3">
+                    <p class="question">Zet in de futur proche:</p>
+                    <p class="sentence">Nous ___ (regarder) un film.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="vas regarder">vas regarder</button>
+                        <button class="option-btn" data-answer="allons regarder" data-correct="true">allons regarder</button>
+                        <button class="option-btn" data-answer="regarderons">regarderons</button>
+                        <button class="option-btn" data-answer="regardons">regardons</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fp-4">
+                    <p class="question">Zet in de futur proche:</p>
+                    <p class="sentence">Ils ___ (arriver) dans 5 minutes.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="va arriver">va arriver</button>
+                        <button class="option-btn" data-answer="vont arriver" data-correct="true">vont arriver</button>
+                        <button class="option-btn" data-answer="arriveront">arriveront</button>
+                        <button class="option-btn" data-answer="arrivent">arrivent</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                <div class="exercise" data-exercise-id="fp-5">
+                    <p class="question">Zet in de futur proche:</p>
+                    <p class="sentence">Elle ___ (se coucher) bientôt.</p>
+                    <div class="options">
+                        <button class="option-btn" data-answer="va se coucher" data-correct="true">va se coucher</button>
+                        <button class="option-btn" data-answer="vas se coucher">vas se coucher</button>
+                        <button class="option-btn" data-answer="se couchera">se couchera</button>
+                        <button class="option-btn" data-answer="se couche">se couche</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress" class="topic-section">
+            <h2>📊 Mijn Voortgang</h2>
+            <div class="progress-container">
+                <div class="progress-summary">
+                    <h3>Totale Score</h3>
+                    <div class="total-score">
+                        <span id="total-correct">0</span> / <span id="total-exercises">0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="total-progress"></div>
+                    </div>
+                </div>
+                <div class="topic-progress-list">
+                    <h3>Score per Onderwerp</h3>
+                    <div id="topic-scores"></div>
+                </div>
+                <button class="reset-btn" id="reset-progress">Reset Voortgang</button>
+            </div>
+        </section>
+
+        <!-- Study Planner -->
+        <section id="planner" class="topic-section">
+            <h2>📅 Studieplanner</h2>
+            <div class="planner-container">
+                <p>Plan je studie-uren en houd bij wat je hebt gedaan.</p>
+                <div class="planner-form">
+                    <div class="form-group">
+                        <label for="study-date">Datum:</label>
+                        <input type="date" id="study-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="study-topic">Onderwerp:</label>
+                        <select id="study-topic">
+                            <option value="">Kies een onderwerp...</option>
+                            <option value="pronoms-sujets">Les pronoms personnels sujets</option>
+                            <option value="negation">La négation</option>
+                            <option value="etre-avoir">Être / Avoir / Verbes -ER</option>
+                            <option value="verbes-re">Les verbes en -RE</option>
+                            <option value="verbes-ir">Les verbes en -IR</option>
+                            <option value="questions">La question</option>
+                            <option value="adj-possessif">L'adjectif possessif</option>
+                            <option value="adj-qualificatif">L'adjectif qualificatif</option>
+                            <option value="verbes-pronominaux">Les verbes pronominaux</option>
+                            <option value="adj-demonstratif">L'adjectif démonstratif</option>
+                            <option value="article-partitif">L'article partitif</option>
+                            <option value="imparfait">L'imparfait</option>
+                            <option value="futur-simple">Le futur simple</option>
+                            <option value="conditionnel">Le conditionnel</option>
+                            <option value="cod-coi">COD / COI</option>
+                            <option value="passe-compose">Le passé composé</option>
+                            <option value="imperatif">L'impératif</option>
+                            <option value="futur-proche">Le futur proche</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="study-duration">Duur (minuten):</label>
+                        <input type="number" id="study-duration" min="15" max="120" value="60">
+                    </div>
+                    <div class="form-group">
+                        <label for="study-notes">Notities:</label>
+                        <textarea id="study-notes" placeholder="Wat heb je geleerd? Waar had je moeite mee?"></textarea>
+                    </div>
+                    <button class="add-session-btn" id="add-session">Sessie Toevoegen</button>
+                </div>
+                <div class="study-log">
+                    <h3>📋 Studielogboek</h3>
+                    <p class="log-info">Minimaal 8 sessies van 1 uur nodig!</p>
+                    <div id="session-list"></div>
+                    <div class="log-summary">
+                        <p>Totaal aantal sessies: <strong id="session-count">0</strong></p>
+                        <p>Totale studietijd: <strong id="total-time">0</strong> minuten</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Veel succes met oefenen, Mala! 💪🇫🇷</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
