@@ -31,28 +31,39 @@ class DBPFHeader:
     index_entry_count: int
     index_offset: int
     index_size: int
+    index_type: int = 7
 
     @classmethod
     def from_bytes(cls, data: bytes) -> 'DBPFHeader':
         """Parse header from bytes"""
         if len(data) < 96:
-            raise ValueError(f"Header too short: {len(data)} bytes")
+            raise ValueError(f"Header te kort: {len(data)} bytes (minimaal 96 nodig)")
 
         magic = data[0:4]
         if magic != b'DBPF':
-            raise ValueError(f"Invalid DBPF magic: {magic}")
+            raise ValueError(f"Ongeldig DBPF bestand: magic bytes zijn {magic!r}, verwacht b'DBPF'")
 
         major_version = struct.unpack('<I', data[4:8])[0]
         minor_version = struct.unpack('<I', data[8:12])[0]
 
+        # Index type at offset 32
+        index_type = struct.unpack('<I', data[32:36])[0]
+
+        # Index entry count at offset 36
+        index_entry_count = struct.unpack('<I', data[36:40])[0]
+
         # Index information varies by version
         if major_version == 2:
-            index_entry_count = struct.unpack('<I', data[36:40])[0]
+            # DBPF 2.0 (Sims 4) - index info at offset 64-72
             index_offset = struct.unpack('<I', data[64:68])[0]
             index_size = struct.unpack('<I', data[68:72])[0]
+
+            # If offset is 0, try alternative location
+            if index_offset == 0:
+                index_offset = struct.unpack('<I', data[40:44])[0]
+                index_size = struct.unpack('<I', data[44:48])[0]
         else:
             # DBPF 1.x format
-            index_entry_count = struct.unpack('<I', data[36:40])[0]
             index_offset = struct.unpack('<I', data[40:44])[0]
             index_size = struct.unpack('<I', data[44:48])[0]
 
@@ -62,7 +73,8 @@ class DBPFHeader:
             minor_version=minor_version,
             index_entry_count=index_entry_count,
             index_offset=index_offset,
-            index_size=index_size
+            index_size=index_size,
+            index_type=index_type
         )
 
     def to_bytes(self) -> bytes:
@@ -157,50 +169,88 @@ class DBPFFile:
         self.filepath = Path(filepath)
 
         with open(filepath, 'rb') as f:
-            # Read and parse header
-            self._raw_header = f.read(96)
-            self.header = DBPFHeader.from_bytes(self._raw_header)
+            # Read entire file first
+            file_data = f.read()
 
-            # Read index
-            f.seek(self.header.index_offset)
-            index_data = f.read(self.header.index_size)
+        # Check if file is compressed (zlib header)
+        if file_data[0:2] in [b'\x78\x9C', b'\x78\xDA', b'\x78\x01', b'\x78\x5E']:
+            try:
+                file_data = zlib.decompress(file_data)
+            except zlib.error as e:
+                raise ValueError(f"Kon gecomprimeerd bestand niet uitpakken: {e}")
 
-            # Parse index entries
-            entries = self._parse_index(index_data, self.header.index_entry_count)
+        # Now parse as DBPF
+        if len(file_data) < 96:
+            raise ValueError(f"Bestand te klein: {len(file_data)} bytes")
 
-            # Read all resources
-            for entry in entries:
-                f.seek(entry.offset)
-                raw_data = f.read(entry.file_size)
+        self._raw_header = file_data[0:96]
+        self.header = DBPFHeader.from_bytes(self._raw_header)
 
-                # Decompress if needed
-                if entry.compressed and entry.file_size != entry.mem_size:
-                    try:
-                        data = self._decompress(raw_data, entry.mem_size)
-                    except Exception:
-                        # Keep raw data if decompression fails
-                        data = raw_data
-                else:
+        # Validate index offset
+        if self.header.index_offset > len(file_data):
+            raise ValueError(
+                f"Ongeldige index offset: {self.header.index_offset} > bestandsgrootte {len(file_data)}"
+            )
+
+        # Read index
+        index_end = self.header.index_offset + self.header.index_size
+        if index_end > len(file_data):
+            # Adjust index size if it goes beyond file
+            actual_size = len(file_data) - self.header.index_offset
+            index_data = file_data[self.header.index_offset:self.header.index_offset + actual_size]
+        else:
+            index_data = file_data[self.header.index_offset:index_end]
+
+        # Parse index entries
+        entries = self._parse_index(index_data, self.header.index_entry_count)
+
+        # Read all resources
+        for entry in entries:
+            # Validate offset
+            if entry.offset >= len(file_data):
+                print(f"Waarschuwing: Resource offset {entry.offset} buiten bestand, overslaan")
+                continue
+
+            end_offset = min(entry.offset + entry.file_size, len(file_data))
+            raw_data = file_data[entry.offset:end_offset]
+
+            if len(raw_data) == 0:
+                continue
+
+            # Decompress if needed
+            if entry.compressed and entry.file_size != entry.mem_size:
+                try:
+                    data = self._decompress(raw_data, entry.mem_size)
+                except Exception:
+                    # Keep raw data if decompression fails
                     data = raw_data
+            else:
+                data = raw_data
 
-                resource = Resource(entry=entry, data=data)
-                self.resources[resource.key] = resource
+            resource = Resource(entry=entry, data=data)
+            self.resources[resource.key] = resource
+
+    def _safe_unpack(self, data: bytes, offset: int, size: int = 4) -> Tuple[int, int]:
+        """Safely unpack an integer from data with bounds checking"""
+        if offset + size > len(data):
+            raise ValueError(f"Buffer te kort: nodig {offset + size} bytes, hebben {len(data)}")
+        value = struct.unpack('<I', data[offset:offset+size])[0]
+        return value, offset + size
 
     def _parse_index(self, data: bytes, count: int) -> List[IndexEntry]:
         """Parse index entries from raw data"""
         entries = []
 
-        if count == 0:
+        if count == 0 or len(data) < 4:
             return entries
 
         # Read index flags (first 4 bytes)
-        flags = struct.unpack('<I', data[0:4])[0]
-        offset = 4
+        flags, offset = self._safe_unpack(data, 0)
 
         # Check which fields are constant across all entries
-        const_type = flags & 0x01
-        const_group = flags & 0x02
-        const_instance_high = flags & 0x04
+        const_type = bool(flags & 0x01)
+        const_group = bool(flags & 0x02)
+        const_instance_high = bool(flags & 0x04)
 
         # Read constant values if flagged
         type_id_const = 0
@@ -208,66 +258,59 @@ class DBPFFile:
         instance_high_const = 0
 
         if const_type:
-            type_id_const = struct.unpack('<I', data[offset:offset+4])[0]
-            offset += 4
+            type_id_const, offset = self._safe_unpack(data, offset)
         if const_group:
-            group_id_const = struct.unpack('<I', data[offset:offset+4])[0]
-            offset += 4
+            group_id_const, offset = self._safe_unpack(data, offset)
         if const_instance_high:
-            instance_high_const = struct.unpack('<I', data[offset:offset+4])[0]
-            offset += 4
+            instance_high_const, offset = self._safe_unpack(data, offset)
 
         # Parse each entry
-        for _ in range(count):
-            if const_type:
-                type_id = type_id_const
-            else:
-                type_id = struct.unpack('<I', data[offset:offset+4])[0]
-                offset += 4
+        for i in range(count):
+            try:
+                if const_type:
+                    type_id = type_id_const
+                else:
+                    type_id, offset = self._safe_unpack(data, offset)
 
-            if const_group:
-                group_id = group_id_const
-            else:
-                group_id = struct.unpack('<I', data[offset:offset+4])[0]
-                offset += 4
+                if const_group:
+                    group_id = group_id_const
+                else:
+                    group_id, offset = self._safe_unpack(data, offset)
 
-            if const_instance_high:
-                instance_high = instance_high_const
-            else:
-                instance_high = struct.unpack('<I', data[offset:offset+4])[0]
-                offset += 4
+                if const_instance_high:
+                    instance_high = instance_high_const
+                else:
+                    instance_high, offset = self._safe_unpack(data, offset)
 
-            instance_low = struct.unpack('<I', data[offset:offset+4])[0]
-            offset += 4
+                instance_low, offset = self._safe_unpack(data, offset)
+                instance_id = (instance_high << 32) | instance_low
 
-            instance_id = (instance_high << 32) | instance_low
+                entry_offset, offset = self._safe_unpack(data, offset)
+                file_size_raw, offset = self._safe_unpack(data, offset)
 
-            entry_offset = struct.unpack('<I', data[offset:offset+4])[0]
-            offset += 4
+                # Check compression flag (high bit of file_size)
+                compressed = bool(file_size_raw & 0x80000000)
+                file_size = file_size_raw & 0x7FFFFFFF
 
-            file_size = struct.unpack('<I', data[offset:offset+4])[0]
-            offset += 4
+                mem_size, offset = self._safe_unpack(data, offset)
 
-            # Check compression flag (high bit of file_size)
-            compressed = bool(file_size & 0x80000000)
-            file_size = file_size & 0x7FFFFFFF
+                # Skip compressed size field if present
+                if compressed:
+                    _, offset = self._safe_unpack(data, offset)
 
-            mem_size = struct.unpack('<I', data[offset:offset+4])[0]
-            offset += 4
-
-            # Skip compressed size field if present
-            if compressed:
-                offset += 4
-
-            entries.append(IndexEntry(
-                type_id=type_id,
-                group_id=group_id,
-                instance_id=instance_id,
-                offset=entry_offset,
-                file_size=file_size,
-                mem_size=mem_size,
-                compressed=compressed
-            ))
+                entries.append(IndexEntry(
+                    type_id=type_id,
+                    group_id=group_id,
+                    instance_id=instance_id,
+                    offset=entry_offset,
+                    file_size=file_size,
+                    mem_size=mem_size,
+                    compressed=compressed
+                ))
+            except ValueError as e:
+                # Stop parsing if we run out of data
+                print(f"Waarschuwing: Kon entry {i+1}/{count} niet parsen: {e}")
+                break
 
         return entries
 
@@ -390,8 +433,14 @@ class DBPFFile:
             return compressed, True
         return data, False
 
-    def save(self, filepath: Path) -> None:
-        """Save the DBPF file"""
+    def save(self, filepath: Path, compress_file: bool = False) -> None:
+        """
+        Save the DBPF file
+
+        Args:
+            filepath: Output path
+            compress_file: If True, compress the entire file with zlib
+        """
         filepath = Path(filepath)
 
         # Prepare all resources and build index
@@ -422,20 +471,61 @@ class DBPFFile:
         index_data = self._build_index(entries)
         index_offset = data_offset
 
-        # Update header
+        # Build complete DBPF 2.0 header (96 bytes)
         header = bytearray(96)
+
+        # Magic and version
         header[0:4] = b'DBPF'
-        struct.pack_into('<I', header, 4, 2)  # Major version
-        struct.pack_into('<I', header, 8, 1)  # Minor version
+        struct.pack_into('<I', header, 4, 2)   # Major version
+        struct.pack_into('<I', header, 8, 1)   # Minor version
+
+        # User version (can be 0)
+        struct.pack_into('<I', header, 12, 0)  # User major
+        struct.pack_into('<I', header, 16, 0)  # User minor
+
+        # Unused/flags
+        struct.pack_into('<I', header, 20, 0)  # Flags
+
+        # Created/modified timestamps (0 = not set)
+        struct.pack_into('<I', header, 24, 0)  # Created
+        struct.pack_into('<I', header, 28, 0)  # Modified
+
+        # Index type (usually 7 for Sims 4)
+        struct.pack_into('<I', header, 32, 7)
+
+        # Index entry count
         struct.pack_into('<I', header, 36, len(entries))
+
+        # Index location (offset 40-44 is usually 0 for DBPF 2.0)
+        struct.pack_into('<I', header, 40, 0)
+
+        # Index size at offset 44 (alternative location)
+        struct.pack_into('<I', header, 44, len(index_data))
+
+        # Hole count/offset/size (usually 0)
+        struct.pack_into('<I', header, 48, 0)  # Hole count
+        struct.pack_into('<I', header, 52, 0)  # Hole offset
+        struct.pack_into('<I', header, 56, 0)  # Hole size
+
+        # Index minor version
+        struct.pack_into('<I', header, 60, 3)
+
+        # Index offset and size (primary location for DBPF 2.0)
         struct.pack_into('<I', header, 64, index_offset)
         struct.pack_into('<I', header, 68, len(index_data))
 
+        # Reserved bytes 72-95 are 0
+
+        # Combine all data
+        output_data = bytes(header) + bytes(resource_data) + bytes(index_data)
+
+        # Optionally compress entire file
+        if compress_file:
+            output_data = zlib.compress(output_data, 6)
+
         # Write file
         with open(filepath, 'wb') as f:
-            f.write(header)
-            f.write(resource_data)
-            f.write(index_data)
+            f.write(output_data)
 
     def _build_index(self, entries: List[IndexEntry]) -> bytes:
         """Build index data from entries"""

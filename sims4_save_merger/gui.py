@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Optional
 import threading
 import os
+import traceback
 
 from .merger import Sims4SaveMerger, MergeResult, MergeStrategy
 
@@ -327,7 +328,21 @@ Tip: Maak altijd een backup van je originele saves voordat je begint!
             self.root.after(0, lambda: self._show_analysis_result(result, True))
 
         except Exception as e:
-            error_msg = f"Fout bij analyseren: {str(e)}"
+            # Get detailed error information
+            error_details = traceback.format_exc()
+            error_msg = f"""Fout bij analyseren: {str(e)}
+
+MOGELIJKE OORZAKEN:
+1. Het bestand is geen geldig Sims 4 save bestand
+2. Het bestand is beschadigd of incompleet
+3. Het bestand gebruikt een niet-ondersteund formaat
+
+DETAILS:
+{error_details}
+
+TIP: Probeer de debug tool om meer informatie te krijgen:
+  python -m sims4_save_merger.debug_save "{self.newer_path.get()}"
+"""
             self.root.after(0, lambda: self._show_analysis_result(error_msg, False))
 
     def _format_analysis(self, newer_stats, older_stats, comparison, mergeable) -> str:
