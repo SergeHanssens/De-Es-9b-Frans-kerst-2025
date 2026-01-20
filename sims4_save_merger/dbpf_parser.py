@@ -54,14 +54,19 @@ class DBPFHeader:
 
         # Index information varies by version
         if major_version == 2:
-            # DBPF 2.0 (Sims 4) - index info at offset 64-72
+            # DBPF 2.0 (Sims 4) - index offset at 64-68
             index_offset = struct.unpack('<I', data[64:68])[0]
+
+            # Index size can be at 68-72 OR 44-48 depending on the file
             index_size = struct.unpack('<I', data[68:72])[0]
 
-            # If offset is 0, try alternative location
+            # If size is 0 at 68-72, use alternative location at 44-48
+            if index_size == 0:
+                index_size = struct.unpack('<I', data[44:48])[0]
+
+            # If offset is 0, try alternative location at 40-44
             if index_offset == 0:
                 index_offset = struct.unpack('<I', data[40:44])[0]
-                index_size = struct.unpack('<I', data[44:48])[0]
         else:
             # DBPF 1.x format
             index_offset = struct.unpack('<I', data[40:44])[0]
