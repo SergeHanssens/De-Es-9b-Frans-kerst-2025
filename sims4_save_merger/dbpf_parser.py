@@ -244,6 +244,28 @@ class DBPFFile:
         if count == 0 or len(data) < 4:
             return entries
 
+        # Try standard DBPF 2.0 index format first
+        try:
+            entries = self._parse_index_dbpf2(data, count)
+            if entries:
+                return entries
+        except Exception:
+            pass
+
+        # Fallback: try fixed-size entry format (32 bytes per entry, no flags)
+        try:
+            entries = self._parse_index_fixed(data, count)
+            if entries:
+                return entries
+        except Exception:
+            pass
+
+        return entries
+
+    def _parse_index_dbpf2(self, data: bytes, count: int) -> List[IndexEntry]:
+        """Parse DBPF 2.0 index format with flags"""
+        entries = []
+
         # Read index flags (first 4 bytes)
         flags, offset = self._safe_unpack(data, 0)
 
@@ -310,6 +332,60 @@ class DBPFFile:
             except ValueError as e:
                 # Stop parsing if we run out of data
                 print(f"Waarschuwing: Kon entry {i+1}/{count} niet parsen: {e}")
+                break
+
+        return entries
+
+    def _parse_index_fixed(self, data: bytes, count: int) -> List[IndexEntry]:
+        """Parse fixed-size index entries (32 bytes each, no flags header)"""
+        entries = []
+        entry_size = 32  # Type(4) + Group(4) + Instance(8) + Offset(4) + FileSize(4) + MemSize(4) + Compressed(4)
+
+        # Check if we have flags header or direct entries
+        # If data starts with reasonable entry values, assume no header
+        offset = 0
+
+        # Check if first 4 bytes look like flags (small number) or type ID (large hex)
+        first_val = struct.unpack('<I', data[0:4])[0]
+        if first_val < 8:  # Likely flags
+            offset = 4
+            flags = first_val
+            if flags & 0x01:
+                offset += 4
+            if flags & 0x02:
+                offset += 4
+            if flags & 0x04:
+                offset += 4
+
+        remaining = len(data) - offset
+        actual_count = min(count, remaining // entry_size)
+
+        for i in range(actual_count):
+            try:
+                base = offset + (i * entry_size)
+
+                type_id = struct.unpack('<I', data[base:base+4])[0]
+                group_id = struct.unpack('<I', data[base+4:base+8])[0]
+                instance_id = struct.unpack('<Q', data[base+8:base+16])[0]
+                entry_offset = struct.unpack('<I', data[base+16:base+20])[0]
+
+                file_size_raw = struct.unpack('<I', data[base+20:base+24])[0]
+                compressed = bool(file_size_raw & 0x80000000)
+                file_size = file_size_raw & 0x7FFFFFFF
+
+                mem_size = struct.unpack('<I', data[base+24:base+28])[0]
+
+                entries.append(IndexEntry(
+                    type_id=type_id,
+                    group_id=group_id,
+                    instance_id=instance_id,
+                    offset=entry_offset,
+                    file_size=file_size,
+                    mem_size=mem_size,
+                    compressed=compressed
+                ))
+            except Exception as e:
+                print(f"Waarschuwing: Fout bij fixed entry {i}: {e}")
                 break
 
         return entries
