@@ -16,7 +16,7 @@ def test_roundtrip():
     print("ROUNDTRIP TEST: Lees werkende save, schrijf ongewijzigd terug")
     print("=" * 70)
 
-    working_path = Path("sims4_save_merger/AllSlots/Slot_00000002.save(13).ver4")
+    working_path = Path("sims4_save_merger/TEST_WORKING_SLOT/Slot_00000002.save")
 
     print(f"\nOrigineel: {working_path}")
     print(f"Size: {working_path.stat().st_size:,} bytes")

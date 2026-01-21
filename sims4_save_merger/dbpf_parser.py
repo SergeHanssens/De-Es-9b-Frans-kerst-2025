@@ -522,6 +522,130 @@ class DBPFFile:
             return compressed, True
         return data, False
 
+    def _compress_refpack(self, data: bytes) -> bytes:
+        """Compress data using RefPack/QFS format (0x50FB variant)"""
+        if len(data) == 0:
+            return data
+
+        result = bytearray()
+
+        # Header: 0x50 0xFB + 3-byte big-endian uncompressed size
+        result.append(0x50)
+        result.append(0xFB)
+        size = len(data)
+        result.append((size >> 16) & 0xFF)
+        result.append((size >> 8) & 0xFF)
+        result.append(size & 0xFF)
+
+        pos = 0
+
+        while pos < len(data):
+            # Find best match in sliding window (max 131072 bytes back)
+            best_offset = 0
+            best_length = 0
+
+            max_search = min(pos, 131072)
+            min_match = 3
+            max_match = 1028  # Maximum match length
+
+            if pos + min_match <= len(data):
+                # Search for matches
+                for offset in range(1, max_search + 1):
+                    match_len = 0
+                    while (match_len < max_match and
+                           pos + match_len < len(data) and
+                           data[pos - offset + match_len] == data[pos + match_len]):
+                        match_len += 1
+
+                    if match_len >= min_match and match_len > best_length:
+                        best_length = match_len
+                        best_offset = offset
+                        if match_len >= max_match:
+                            break
+
+            if best_length >= 3:
+                # Encode a copy command
+                copy_offset = best_offset - 1  # Offset is stored as offset-1
+                copy_length = best_length
+
+                if copy_length <= 10 and copy_offset < 1024:
+                    # Short copy: 2-byte command (0x00-0x7F range)
+                    # Format: 0LLLOONN OOOOOOOO
+                    # L = length - 3 (0-7), O = offset (0-1023), N = literal count (0-3)
+                    ctrl = ((copy_length - 3) << 2) | ((copy_offset >> 8) << 5)
+                    result.append(ctrl)
+                    result.append(copy_offset & 0xFF)
+
+                elif copy_length <= 67 and copy_offset < 16384:
+                    # Medium copy: 3-byte command (0x80-0xBF range)
+                    # Format: 10LLLLLL NNOOOOOO OOOOOOOO
+                    # L = length - 4 (0-63), O = offset (0-16383), N = literal count (0-3)
+                    ctrl = 0x80 | (copy_length - 4)
+                    result.append(ctrl)
+                    result.append((copy_offset >> 8) & 0x3F)
+                    result.append(copy_offset & 0xFF)
+
+                else:
+                    # Long copy: 4-byte command (0xC0-0xDF range)
+                    # Format: 110LLNNN LLLLLLLL OOOOOOOO OOOOOOOO
+                    # L = length - 5 (0-1023), O = offset (0-131071), N = literal count (0-3)
+                    length_val = copy_length - 5
+                    ctrl = 0xC0 | ((length_val >> 8) << 2)
+                    result.append(ctrl)
+                    result.append(length_val & 0xFF)
+                    result.append((copy_offset >> 8) & 0xFF)
+                    result.append(copy_offset & 0xFF)
+
+                pos += best_length
+
+            else:
+                # Accumulate literals
+                literal_start = pos
+                while pos < len(data):
+                    # Check if we can find a good match
+                    if pos + 3 <= len(data):
+                        found_match = False
+                        max_search = min(pos, 131072)
+                        for offset in range(1, min(max_search + 1, 1024)):
+                            if (data[pos - offset] == data[pos] and
+                                data[pos - offset + 1] == data[pos + 1] and
+                                data[pos - offset + 2] == data[pos + 2]):
+                                found_match = True
+                                break
+                        if found_match:
+                            break
+                    pos += 1
+
+                literals = data[literal_start:pos]
+
+                # Encode literals
+                lit_pos = 0
+                while lit_pos < len(literals):
+                    remaining = len(literals) - lit_pos
+
+                    if remaining >= 4:
+                        # Use 0xE0-0xFB command for 4+ literals
+                        # Format: 111NNNNN followed by (N+1)*4 literal bytes
+                        num_quads = min((remaining // 4), 28)  # Max 28 quads = 112 bytes
+                        ctrl = 0xE0 | (num_quads - 1)
+                        result.append(ctrl)
+                        for i in range(num_quads * 4):
+                            result.append(literals[lit_pos + i])
+                        lit_pos += num_quads * 4
+                    else:
+                        # Use 0xFC-0xFF for 0-3 trailing literals
+                        ctrl = 0xFC | remaining
+                        result.append(ctrl)
+                        for i in range(remaining):
+                            result.append(literals[lit_pos + i])
+                        lit_pos += remaining
+
+        # End marker
+        if len(result) > 5 and result[-1] < 0xFC:
+            result.append(0xFC)  # End with 0 literals marker
+
+        return bytes(result)
+
     def save(self, filepath: Path, compress_file: bool = False) -> None:
         """
         Save the DBPF file
@@ -539,9 +663,23 @@ class DBPFFile:
         data_offset = 96  # Start after header
 
         for key, resource in self.resources.items():
-            # Store data uncompressed for maximum compatibility
-            # Sims 4 can read uncompressed resources without issues
-            data_to_write = resource.data
+            # Use zlib compression for Sims 4 compatibility
+            original_data = resource.data
+            mem_size = len(original_data)
+
+            # Compress using zlib if data is large enough
+            if mem_size >= 64:
+                compressed_data = zlib.compress(original_data, 6)
+                # Only use compressed if it saves significant space
+                if len(compressed_data) < mem_size * 0.9:
+                    data_to_write = compressed_data
+                    is_compressed = True
+                else:
+                    data_to_write = original_data
+                    is_compressed = False
+            else:
+                data_to_write = original_data
+                is_compressed = False
 
             entry = IndexEntry(
                 type_id=key[0],
@@ -549,8 +687,8 @@ class DBPFFile:
                 instance_id=key[2],
                 offset=data_offset,
                 file_size=len(data_to_write),
-                mem_size=len(data_to_write),
-                compressed=False
+                mem_size=mem_size,
+                compressed=is_compressed
             )
             entries.append(entry)
 
