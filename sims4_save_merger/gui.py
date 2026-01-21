@@ -468,10 +468,11 @@ TIP: Probeer de debug tool om meer informatie te krijgen:
     def _do_merge(self):
         """Perform the merge (runs in thread)"""
         try:
-            # Use SMART_MERGE to detect empty/corrupted lot data
+            # Use WORKING_BASE: use older (working) save as base, only update sim data from newer
+            # This preserves ALL buildings/lots and only updates sim progress
             result = self.merger.merge(
                 Path(self.output_path.get()),
-                MergeStrategy.SMART_MERGE
+                MergeStrategy.WORKING_BASE
             )
 
             self.root.after(0, lambda: self._show_merge_result(result))

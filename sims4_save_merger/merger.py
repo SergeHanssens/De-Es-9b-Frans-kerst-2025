@@ -28,6 +28,7 @@ class MergeStrategy(Enum):
     OLDER_BASE_ADD_NEWER = "older_base_add_newer"      # Older + updates from newer
     SMART_MERGE = "smart_merge"                        # Smart: use larger version for lot data
     PREFER_LARGER = "prefer_larger"                    # Always use larger version for ALL conflicts
+    WORKING_BASE = "working_base"                      # Use working/older as base, only update sim data from newer
     MANUAL_SELECT = "manual_select"                    # User selects each resource
 
 
@@ -72,6 +73,10 @@ class Sims4SaveMerger:
         0xB61DE6B4,  # Household
         0x0C772E27,  # RelationshipData
         0x3BD45407,  # Situation
+        0x0000000D,  # Sim-related game data
+        0x0000000F,  # Game state data
+        0x00000014,  # Achievement/progress data
+        0x00000015,  # Skills/relationships data
     }
 
     # Resource types that typically contain world/lot data (may need from older)
@@ -389,6 +394,64 @@ class Sims4SaveMerger:
             use_older_keys = self._get_larger_resources()
             if use_older_keys:
                 warnings.append(f"Prefer larger: {len(use_older_keys)} resources worden uit oudere save genomen (grotere versie)")
+
+        elif strategy == MergeStrategy.WORKING_BASE:
+            # WORKING_BASE: Use older (working) save as the base
+            # Only update sim-related resources from newer (corrupt) save
+            warnings.append("Working base strategie: werkende save als basis, alleen sim-data van nieuwere")
+
+            # Start with ALL resources from older (working) save
+            for key, resource in self.older_file.resources.items():
+                merged.resources[key] = resource
+                resources_from_older_count += 1
+
+            # Now ONLY update sim-related resources from newer save
+            sim_updates = 0
+            for key, resource in self.newer_file.resources.items():
+                type_id = key[0]
+                # Only use newer version for sim-related types
+                if type_id in self.SIM_RELATED_TYPES:
+                    merged.resources[key] = resource
+                    resources_from_newer_count += 1
+                    resources_from_older_count -= 1  # We're replacing
+                    sim_updates += 1
+
+            warnings.append(f"Updated {sim_updates} sim-gerelateerde resources van nieuwere save")
+
+            # Add any new resources from newer that don't exist in older
+            for key in self._comparison['only_in_file1']:
+                if key not in merged.resources:
+                    merged.resources[key] = self.newer_file.resources[key]
+                    resources_from_newer_count += 1
+
+            # Skip the normal resource loop for WORKING_BASE
+            self._report_progress("Opslaan van samengevoegd bestand...", 80)
+
+            try:
+                merged.save(output_path)
+            except Exception as e:
+                errors.append(f"Fout bij opslaan: {str(e)}")
+                return MergeResult(
+                    success=False,
+                    output_file=None,
+                    resources_from_newer=resources_from_newer_count,
+                    resources_from_older=resources_from_older_count,
+                    resources_total=len(merged.resources),
+                    errors=errors,
+                    warnings=warnings
+                )
+
+            self._report_progress("Samenvoegen voltooid!", 100)
+
+            return MergeResult(
+                success=True,
+                output_file=output_path,
+                resources_from_newer=resources_from_newer_count,
+                resources_from_older=resources_from_older_count,
+                resources_total=len(merged.resources),
+                errors=errors,
+                warnings=warnings
+            )
 
         for key, resource in self.newer_file.resources.items():
             # Check if we should use older version for conflicts
