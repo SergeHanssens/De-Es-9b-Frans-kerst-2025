@@ -111,6 +111,7 @@ class IndexEntry:
     file_size: int  # Size in file (possibly compressed)
     mem_size: int   # Size in memory (uncompressed)
     compressed: bool
+    compressed_size_field: int = 0  # Extra field stored after compressed entries (preserve original value)
 
     @property
     def key(self) -> Tuple[int, int, int]:
@@ -127,7 +128,9 @@ class IndexEntry:
 class Resource:
     """A complete resource with index entry and data"""
     entry: IndexEntry
-    data: bytes
+    data: bytes  # Decompressed data
+    raw_data: bytes = None  # Original compressed bytes (for writing back)
+    modified: bool = False  # True if data was modified after loading
 
     @property
     def key(self) -> Tuple[int, int, int]:
@@ -136,6 +139,12 @@ class Resource:
     @property
     def key_hex(self) -> str:
         return self.entry.key_hex
+
+    def set_data(self, new_data: bytes):
+        """Set new data and mark as modified"""
+        self.data = new_data
+        self.modified = True
+        self.raw_data = None  # Clear raw data since it's now invalid
 
 
 class DBPFFile:
@@ -229,10 +238,13 @@ class DBPFFile:
                 except Exception:
                     # Keep raw data if decompression fails
                     data = raw_data
-            else:
-                data = raw_data
 
-            resource = Resource(entry=entry, data=data)
+                # Store both raw (compressed) and decompressed data
+                resource = Resource(entry=entry, data=data, raw_data=raw_data, modified=False)
+            else:
+                # Not compressed - raw_data IS the data
+                resource = Resource(entry=entry, data=raw_data, raw_data=raw_data, modified=False)
+
             self.resources[resource.key] = resource
 
     def _safe_unpack(self, data: bytes, offset: int, size: int = 4) -> Tuple[int, int]:
@@ -321,9 +333,10 @@ class DBPFFile:
 
                 mem_size, offset = self._safe_unpack(data, offset)
 
-                # Skip compressed size field if present
+                # Read compressed size field if present (preserve original value)
+                compressed_size_field = 0
                 if compressed:
-                    _, offset = self._safe_unpack(data, offset)
+                    compressed_size_field, offset = self._safe_unpack(data, offset)
 
                 entries.append(IndexEntry(
                     type_id=type_id,
@@ -332,7 +345,8 @@ class DBPFFile:
                     offset=entry_offset,
                     file_size=file_size,
                     mem_size=mem_size,
-                    compressed=compressed
+                    compressed=compressed,
+                    compressed_size_field=compressed_size_field
                 ))
             except ValueError as e:
                 # Stop parsing if we run out of data
@@ -663,23 +677,20 @@ class DBPFFile:
         data_offset = 96  # Start after header
 
         for key, resource in self.resources.items():
-            # Use zlib compression for Sims 4 compatibility
-            original_data = resource.data
-            mem_size = len(original_data)
-
-            # Compress using zlib if data is large enough
-            if mem_size >= 64:
-                compressed_data = zlib.compress(original_data, 6)
-                # Only use compressed if it saves significant space
-                if len(compressed_data) < mem_size * 0.9:
-                    data_to_write = compressed_data
-                    is_compressed = True
-                else:
-                    data_to_write = original_data
-                    is_compressed = False
+            # If resource has raw_data and wasn't modified, use original compressed bytes
+            if resource.raw_data is not None and not resource.modified:
+                # Write original compressed/raw data back
+                data_to_write = resource.raw_data
+                is_compressed = resource.entry.compressed
+                mem_size = resource.entry.mem_size
+                compressed_size_field = resource.entry.compressed_size_field
             else:
-                data_to_write = original_data
+                # Resource was modified or new - write uncompressed
+                # (We don't have a reliable RefPack compressor)
+                data_to_write = resource.data
                 is_compressed = False
+                mem_size = len(resource.data)
+                compressed_size_field = 0
 
             entry = IndexEntry(
                 type_id=key[0],
@@ -688,7 +699,8 @@ class DBPFFile:
                 offset=data_offset,
                 file_size=len(data_to_write),
                 mem_size=mem_size,
-                compressed=is_compressed
+                compressed=is_compressed,
+                compressed_size_field=compressed_size_field
             )
             entries.append(entry)
 
@@ -783,7 +795,8 @@ class DBPFFile:
             index.extend(struct.pack('<I', entry.mem_size))
 
             if entry.compressed:
-                index.extend(struct.pack('<I', entry.file_size))
+                # Write the original compressed_size_field value (preserve from original file)
+                index.extend(struct.pack('<I', entry.compressed_size_field))
 
         return bytes(index)
 
