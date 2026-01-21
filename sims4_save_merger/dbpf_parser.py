@@ -571,8 +571,8 @@ class DBPFFile:
         struct.pack_into('<I', header, 24, 0)  # Created
         struct.pack_into('<I', header, 28, 0)  # Modified
 
-        # Index type (usually 7 for Sims 4)
-        struct.pack_into('<I', header, 32, 7)
+        # Index type (0 for Sims 4 saves, 7 for packages)
+        struct.pack_into('<I', header, 32, 0)
 
         # Index entry count
         struct.pack_into('<I', header, 36, len(entries))
