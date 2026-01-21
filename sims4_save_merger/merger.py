@@ -27,6 +27,7 @@ class MergeStrategy(Enum):
     NEWER_BASE_ADD_MISSING = "newer_base_add_missing"  # Default: newer + missing from older
     OLDER_BASE_ADD_NEWER = "older_base_add_newer"      # Older + updates from newer
     SMART_MERGE = "smart_merge"                        # Smart: use larger version for lot data
+    PREFER_LARGER = "prefer_larger"                    # Always use larger version for ALL conflicts
     MANUAL_SELECT = "manual_select"                    # User selects each resource
 
 
@@ -216,7 +217,11 @@ class Sims4SaveMerger:
             # For lot data (type 0x00000006), if newer is tiny but older is large,
             # the newer version is likely corrupted/empty
             if type_id == 0x00000006:
-                if newer_size < self.MIN_LOT_SIZE and older_size > newer_size * 10:
+                # More aggressive: if older is at least 10x larger, use older
+                if older_size > newer_size * 10:
+                    empty_resources.add(key)
+                # Also if newer is very small (<2KB) and older is significantly larger
+                elif newer_size < 2000 and older_size > newer_size * 5:
                     empty_resources.add(key)
 
             # For other world-related types, use similar logic
@@ -224,11 +229,32 @@ class Sims4SaveMerger:
                 if newer_size < 100 and older_size > newer_size * 5:
                     empty_resources.add(key)
 
-            # General rule: if newer is less than 1% of older size, it's likely empty
-            elif older_size > 1000 and newer_size < older_size * 0.01:
+            # General rule: if newer is less than 5% of older size, it's likely empty
+            elif older_size > 1000 and newer_size < older_size * 0.05:
                 empty_resources.add(key)
 
         return empty_resources
+
+    def _get_larger_resources(self) -> Set[Tuple[int, int, int]]:
+        """
+        Get all resources where the older version is larger.
+
+        Returns:
+            Set of keys where older version is larger
+        """
+        larger = set()
+
+        if not self._comparison:
+            return larger
+
+        for key in self._comparison['different']:
+            newer_size = len(self.newer_file.resources[key].data)
+            older_size = len(self.older_file.resources[key].data)
+
+            if older_size > newer_size:
+                larger.add(key)
+
+        return larger
 
     def get_smart_merge_candidates(self) -> List[Tuple[ResourceInfo, ResourceInfo]]:
         """
@@ -349,12 +375,20 @@ class Sims4SaveMerger:
 
         self._report_progress("Kopieren van nieuwere save resources...", 10)
 
-        # For SMART_MERGE, automatically detect empty/corrupted lot data
-        smart_merge_keys = set()
+        # Determine which resources should come from older save
+        use_older_keys = set()
+
         if strategy == MergeStrategy.SMART_MERGE:
-            smart_merge_keys = self._detect_empty_resources()
-            if smart_merge_keys:
-                warnings.append(f"Smart merge: {len(smart_merge_keys)} resources worden uit oudere save genomen (grotere versie)")
+            # Smart merge: detect empty/corrupted resources
+            use_older_keys = self._detect_empty_resources()
+            if use_older_keys:
+                warnings.append(f"Smart merge: {len(use_older_keys)} resources worden uit oudere save genomen (lege/corrupte detectie)")
+
+        elif strategy == MergeStrategy.PREFER_LARGER:
+            # Prefer larger: use older whenever it's bigger
+            use_older_keys = self._get_larger_resources()
+            if use_older_keys:
+                warnings.append(f"Prefer larger: {len(use_older_keys)} resources worden uit oudere save genomen (grotere versie)")
 
         for key, resource in self.newer_file.resources.items():
             # Check if we should use older version for conflicts
@@ -364,8 +398,8 @@ class Sims4SaveMerger:
             if resources_from_older and key in resources_from_older:
                 use_older = True
 
-            # Smart merge: use older if newer appears empty/corrupted
-            if key in smart_merge_keys:
+            # Strategy-based selection
+            if key in use_older_keys:
                 use_older = True
 
             if use_older and key in self.older_file.resources:
