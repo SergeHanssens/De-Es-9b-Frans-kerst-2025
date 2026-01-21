@@ -531,22 +531,23 @@ class DBPFFile:
         data_offset = 96  # Start after header
 
         for key, resource in self.resources.items():
-            # Optionally compress data
-            compressed_data, is_compressed = self._compress(resource.data)
+            # Store data uncompressed for maximum compatibility
+            # Sims 4 can read uncompressed resources without issues
+            data_to_write = resource.data
 
             entry = IndexEntry(
                 type_id=key[0],
                 group_id=key[1],
                 instance_id=key[2],
                 offset=data_offset,
-                file_size=len(compressed_data),
-                mem_size=len(resource.data),
-                compressed=is_compressed
+                file_size=len(data_to_write),
+                mem_size=len(data_to_write),
+                compressed=False
             )
             entries.append(entry)
 
-            resource_data.extend(compressed_data)
-            data_offset += len(compressed_data)
+            resource_data.extend(data_to_write)
+            data_offset += len(data_to_write)
 
         # Build index
         index_data = self._build_index(entries)
