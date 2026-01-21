@@ -322,8 +322,11 @@ Tip: Maak altijd een backup van je originele saves voordat je begint!
             comparison = self.merger.get_comparison_summary()
             mergeable = self.merger.get_mergeable_resources()
 
+            # Get smart merge candidates (empty/corrupted resources in newer)
+            smart_candidates = self.merger.get_smart_merge_candidates()
+
             # Format results
-            result = self._format_analysis(newer_stats, older_stats, comparison, mergeable)
+            result = self._format_analysis(newer_stats, older_stats, comparison, mergeable, smart_candidates)
 
             self.root.after(0, lambda: self._show_analysis_result(result, True))
 
@@ -345,7 +348,7 @@ TIP: Probeer de debug tool om meer informatie te krijgen:
 """
             self.root.after(0, lambda: self._show_analysis_result(error_msg, False))
 
-    def _format_analysis(self, newer_stats, older_stats, comparison, mergeable) -> str:
+    def _format_analysis(self, newer_stats, older_stats, comparison, mergeable, smart_candidates=None) -> str:
         """Format the analysis results for display"""
         lines = []
         lines.append("=" * 60)
@@ -382,6 +385,27 @@ TIP: Probeer de debug tool om meer informatie te krijgen:
                 lines.append(f"   • {type_name}: {count}")
             lines.append("")
 
+        # Show smart merge detection
+        if smart_candidates:
+            lines.append("=" * 60)
+            lines.append("⚠️  SMART MERGE DETECTIE")
+            lines.append("=" * 60)
+            lines.append("")
+            lines.append(f"Gevonden: {len(smart_candidates)} resources die LEEG/CORRUPT")
+            lines.append("lijken in de nieuwere save maar intact zijn in de oudere.")
+            lines.append("")
+
+            # Calculate total size that would be restored
+            total_restored = sum(old.size - new.size for new, old in smart_candidates)
+            lines.append(f"Data die hersteld wordt: {total_restored / 1024 / 1024:.2f} MB")
+            lines.append("")
+
+            lines.append("Top 10 grootste herstelde resources:")
+            for i, (new, old) in enumerate(smart_candidates[:10]):
+                diff = old.size - new.size
+                lines.append(f"   {i+1}. {new.type_name}: {new.size} → {old.size} bytes (+{diff/1024:.1f} KB)")
+            lines.append("")
+
         lines.append("=" * 60)
         lines.append("MERGE PREVIEW")
         lines.append("=" * 60)
@@ -394,6 +418,8 @@ TIP: Probeer de debug tool om meer informatie te krijgen:
         lines.append(f"Het samengevoegde bestand zal bevatten:")
         lines.append(f"   • {total_new} resources van de nieuwere save")
         lines.append(f"   • {total_to_add} resources toegevoegd van de oudere save")
+        if smart_candidates:
+            lines.append(f"   • {len(smart_candidates)} resources VERVANGEN door oudere versie (gebouwen)")
         lines.append(f"   • {total_merged} resources totaal")
         lines.append("")
 
@@ -442,9 +468,10 @@ TIP: Probeer de debug tool om meer informatie te krijgen:
     def _do_merge(self):
         """Perform the merge (runs in thread)"""
         try:
+            # Use SMART_MERGE to detect empty/corrupted lot data
             result = self.merger.merge(
                 Path(self.output_path.get()),
-                MergeStrategy.NEWER_BASE_ADD_MISSING
+                MergeStrategy.SMART_MERGE
             )
 
             self.root.after(0, lambda: self._show_merge_result(result))

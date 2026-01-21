@@ -26,6 +26,7 @@ class MergeStrategy(Enum):
     """Available merge strategies"""
     NEWER_BASE_ADD_MISSING = "newer_base_add_missing"  # Default: newer + missing from older
     OLDER_BASE_ADD_NEWER = "older_base_add_newer"      # Older + updates from newer
+    SMART_MERGE = "smart_merge"                        # Smart: use larger version for lot data
     MANUAL_SELECT = "manual_select"                    # User selects each resource
 
 
@@ -77,7 +78,11 @@ class Sims4SaveMerger:
         0xE882D22F,  # Lot
         0xDC95CF1A,  # Zone
         0x62ECC59A,  # ObjectData
+        0x00000006,  # Zone/Lot data (contains buildings!)
     }
+
+    # Minimum size threshold - if newer is smaller than this, likely corrupted/empty
+    MIN_LOT_SIZE = 100  # bytes
 
     def __init__(self, progress_callback: Optional[Callable[[str, int], None]] = None):
         """
@@ -186,6 +191,79 @@ class Sims4SaveMerger:
 
         return sorted(resources, key=lambda r: (r.type_name, r.key))
 
+    def _detect_empty_resources(self) -> Set[Tuple[int, int, int]]:
+        """
+        Detect resources in newer save that appear empty/corrupted compared to older save.
+
+        Returns:
+            Set of keys for resources where older version should be used
+        """
+        empty_resources = set()
+
+        if not self._comparison:
+            return empty_resources
+
+        for key in self._comparison['different']:
+            newer_resource = self.newer_file.resources[key]
+            older_resource = self.older_file.resources[key]
+
+            newer_size = len(newer_resource.data)
+            older_size = len(older_resource.data)
+
+            # Check if this is a world/lot resource type
+            type_id = key[0]
+
+            # For lot data (type 0x00000006), if newer is tiny but older is large,
+            # the newer version is likely corrupted/empty
+            if type_id == 0x00000006:
+                if newer_size < self.MIN_LOT_SIZE and older_size > newer_size * 10:
+                    empty_resources.add(key)
+
+            # For other world-related types, use similar logic
+            elif type_id in self.WORLD_RELATED_TYPES:
+                if newer_size < 100 and older_size > newer_size * 5:
+                    empty_resources.add(key)
+
+            # General rule: if newer is less than 1% of older size, it's likely empty
+            elif older_size > 1000 and newer_size < older_size * 0.01:
+                empty_resources.add(key)
+
+        return empty_resources
+
+    def get_smart_merge_candidates(self) -> List[Tuple[ResourceInfo, ResourceInfo]]:
+        """
+        Get list of resources that would be taken from older save in smart merge.
+
+        Returns:
+            List of (newer_info, older_info) tuples for resources that appear empty
+        """
+        candidates = []
+        empty_keys = self._detect_empty_resources()
+
+        for key in empty_keys:
+            newer_resource = self.newer_file.resources[key]
+            older_resource = self.older_file.resources[key]
+
+            newer_info = ResourceInfo(
+                key=key,
+                key_hex=newer_resource.key_hex,
+                type_name=self.newer_file.get_resource_type_name(key[0]),
+                size=len(newer_resource.data),
+                source='newer'
+            )
+
+            older_info = ResourceInfo(
+                key=key,
+                key_hex=older_resource.key_hex,
+                type_name=self.older_file.get_resource_type_name(key[0]),
+                size=len(older_resource.data),
+                source='older'
+            )
+
+            candidates.append((newer_info, older_info))
+
+        return sorted(candidates, key=lambda x: x[1].size - x[0].size, reverse=True)
+
     def get_conflicting_resources(self) -> List[Tuple[ResourceInfo, ResourceInfo]]:
         """
         Get list of resources that exist in both files but are different
@@ -271,13 +349,29 @@ class Sims4SaveMerger:
 
         self._report_progress("Kopieren van nieuwere save resources...", 10)
 
+        # For SMART_MERGE, automatically detect empty/corrupted lot data
+        smart_merge_keys = set()
+        if strategy == MergeStrategy.SMART_MERGE:
+            smart_merge_keys = self._detect_empty_resources()
+            if smart_merge_keys:
+                warnings.append(f"Smart merge: {len(smart_merge_keys)} resources worden uit oudere save genomen (grotere versie)")
+
         for key, resource in self.newer_file.resources.items():
             # Check if we should use older version for conflicts
+            use_older = False
+
+            # Explicit override
             if resources_from_older and key in resources_from_older:
-                if key in self.older_file.resources:
-                    merged.resources[key] = self.older_file.resources[key]
-                    resources_from_older_count += 1
-                    continue
+                use_older = True
+
+            # Smart merge: use older if newer appears empty/corrupted
+            if key in smart_merge_keys:
+                use_older = True
+
+            if use_older and key in self.older_file.resources:
+                merged.resources[key] = self.older_file.resources[key]
+                resources_from_older_count += 1
+                continue
 
             merged.resources[key] = resource
             resources_from_newer_count += 1
@@ -330,23 +424,27 @@ class Sims4SaveMerger:
         self,
         newer_path: Path,
         older_path: Path,
-        output_path: Path
+        output_path: Path,
+        smart: bool = True
     ) -> MergeResult:
         """
         Perform a quick merge with default settings
 
         Takes newer save as base, adds all missing resources from older save.
+        Uses SMART_MERGE by default to detect empty/corrupted resources.
 
         Args:
             newer_path: Path to newer save (base)
             older_path: Path to older save (source for missing data)
             output_path: Path for merged output
+            smart: Use smart merge strategy (default True)
 
         Returns:
             MergeResult
         """
         self.load_files(newer_path, older_path)
-        return self.merge(output_path)
+        strategy = MergeStrategy.SMART_MERGE if smart else MergeStrategy.NEWER_BASE_ADD_MISSING
+        return self.merge(output_path, strategy=strategy)
 
 
 def merge_saves(
