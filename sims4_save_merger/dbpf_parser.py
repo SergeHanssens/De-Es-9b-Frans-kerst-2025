@@ -405,7 +405,8 @@ class DBPFFile:
             return zlib.decompress(data)
 
         # Check for RefPack/QFS compression (EA proprietary)
-        if len(data) >= 5 and data[0:2] in [b'\x10\xFB', b'\x90\xFB']:
+        # 0x10FB = basic, 0x50FB = with size header (common in Sims 4), 0x90FB = 24-bit size
+        if len(data) >= 5 and data[0:2] in [b'\x10\xFB', b'\x50\xFB', b'\x90\xFB']:
             return self._decompress_refpack(data, target_size)
 
         return data
@@ -415,10 +416,17 @@ class DBPFFile:
         # RefPack decompression (simplified version)
         result = bytearray()
 
-        # Skip header
-        pos = 2
-        if data[0] & 0x80:
+        # Skip header based on first byte
+        # 0x10FB: 2-byte header (no size)
+        # 0x50FB: 5-byte header (3-byte size after signature)
+        # 0x90FB: 5-byte header (3-byte size after signature)
+        first_byte = data[0]
+        if first_byte & 0x80:  # 0x90
             pos = 5
+        elif first_byte & 0x40:  # 0x50
+            pos = 5
+        else:  # 0x10
+            pos = 2
 
         while pos < len(data) and len(result) < target_size:
             ctrl = data[pos]
@@ -592,11 +600,14 @@ class DBPFFile:
         # Index minor version
         struct.pack_into('<I', header, 60, 3)
 
-        # Index offset and size (primary location for DBPF 2.0)
+        # Index offset (primary location for DBPF 2.0)
         struct.pack_into('<I', header, 64, index_offset)
-        struct.pack_into('<I', header, 68, len(index_data))
 
-        # Reserved bytes 72-95 are 0
+        # Bytes 68-72 should be 0 for Sims 4 saves (index size is at 44-48)
+        struct.pack_into('<I', header, 68, 0)
+
+        # Bytes 80-81 should be 0xFFFF in Sims 4 saves
+        struct.pack_into('<H', header, 80, 0xFFFF)
 
         # Combine all data
         output_data = bytes(header) + bytes(resource_data) + bytes(index_data)
