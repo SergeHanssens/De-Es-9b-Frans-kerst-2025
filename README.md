@@ -26,8 +26,7 @@ tekst aanpassen.
 ## Bestanden
 
 - `index.html`, `app.js`, `styles.css` — de app.
-- `Remediëringsbundel.pdf`, `Opgave_remediëringsbundel.pdf` — de gescande bundel en opdracht van de
-  school, de bron van de oefenstof. Die vallen **niet** onder de licentie hieronder.
+- De remediëringsbundel van de school zelf (de bron van de oefenstof) zit niet in deze repo.
 
 ## Licentie
 
